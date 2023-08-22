@@ -2,11 +2,16 @@ package com.archpj.GetATestBot;
 
 import com.archpj.GetATestBot.components.Buttons;
 import com.archpj.GetATestBot.config.BotConfig;
+import com.archpj.GetATestBot.database.Employee;
+import com.archpj.GetATestBot.database.EmployeeRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.commands.SetMyCommands;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Chat;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.commands.scope.BotCommandScopeDefault;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
@@ -14,6 +19,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +31,9 @@ import static com.archpj.GetATestBot.components.BotCommands.HELP_TEXT;
 public class TestBot extends TelegramLongPollingBot {
 
     final BotConfig botConfig;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     public TestBot (BotConfig botConfig) {
         this.botConfig = botConfig;
@@ -45,42 +54,53 @@ public class TestBot extends TelegramLongPollingBot {
 
 
     public void onUpdateReceived(Update update) {
-        long chatId;
-        long userId = 0;
-        String userName;
+        long chatId = 0;
+        String userName = null;
         String receivedMessage;
 
         //если получено сообщение текстом
         if(update.hasMessage()) {
             chatId = update.getMessage().getChatId();
-            userId = update.getMessage().getFrom().getId();
             userName = update.getMessage().getFrom().getFirstName();
 
             if (update.getMessage().hasText()) {
                 receivedMessage = update.getMessage().getText();
-                botAnswerUtils(receivedMessage, chatId, userName);
+                botAnswerUtils(receivedMessage, chatId, userName, update);
             }
 
             //если нажата одна из кнопок бота
         } else if (update.hasCallbackQuery()) {
             chatId = update.getCallbackQuery().getMessage().getChatId();
-            userId = update.getCallbackQuery().getFrom().getId();
             userName = update.getCallbackQuery().getFrom().getFirstName();
             receivedMessage = update.getCallbackQuery().getData();
 
-            botAnswerUtils(receivedMessage, chatId, userName);
+            botAnswerUtils(receivedMessage, chatId, userName, update);
         }
     }
 
-    private void botAnswerUtils(String receivedMessage, long chatId, String userName) {
-        switch (receivedMessage){
-            case "/start":
+    private void botAnswerUtils(String receivedMessage, long chatId, String userName, Update update) {
+        switch (receivedMessage) {
+            case "/start" -> {
                 startBot(chatId, userName);
-                break;
-            case "/help":
-                sendHelpText(chatId, HELP_TEXT);
-                break;
-            default: break;
+                registerEmployee(update.getMessage());
+            }
+            case "/help" -> sendHelpText(chatId, HELP_TEXT);
+            default -> {
+            }
+        }
+    }
+
+    private void registerEmployee(Message message) {
+        if(employeeRepository.findById(message.getChatId()).isEmpty()) {
+            long telegramId = message.getFrom().getId();
+
+            Employee employee = new Employee();
+            employee.setTelegramId(telegramId);
+            employee.setName(message.getFrom().getUserName());
+            employee.setRegisteredAt(new Timestamp(System.currentTimeMillis()));
+
+            employeeRepository.save(employee);
+            log.info("Employee saved to database: " + employee);
         }
     }
 
