@@ -1,6 +1,6 @@
 package com.archpj.GetATestBot.services;
 
-import com.archpj.GetATestBot.database.Employee;
+import com.archpj.GetATestBot.models.Employee;
 import com.archpj.GetATestBot.database.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,11 +1,13 @@
-package com.archpj.GetATestBot.database;
+package com.archpj.GetATestBot.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @Entity
@@ -14,8 +16,11 @@ public class Employee {
 
     @Id
     private long telegramId;
+
     private String name;
+
     private Timestamp registeredAt;
+
 
     public long getTelegramId() {
         return telegramId;

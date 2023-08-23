@@ -2,7 +2,7 @@ package com.archpj.GetATestBot;
 
 import com.archpj.GetATestBot.components.Buttons;
 import com.archpj.GetATestBot.config.BotConfig;
-import com.archpj.GetATestBot.database.Employee;
+import com.archpj.GetATestBot.models.Employee;
 import com.archpj.GetATestBot.services.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
