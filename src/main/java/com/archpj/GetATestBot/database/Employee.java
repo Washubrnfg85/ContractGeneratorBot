@@ -1,14 +1,15 @@
 package com.archpj.GetATestBot.database;
 
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 import java.sql.Timestamp;
 
 @Data
-@Entity(name = "employeesData")
+@Entity
+@Table(name = "employees_data")
 public class Employee {
 
     @Id

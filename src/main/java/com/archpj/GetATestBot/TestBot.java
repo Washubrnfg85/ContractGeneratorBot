@@ -3,25 +3,19 @@ package com.archpj.GetATestBot;
 import com.archpj.GetATestBot.components.Buttons;
 import com.archpj.GetATestBot.config.BotConfig;
 import com.archpj.GetATestBot.database.Employee;
-import com.archpj.GetATestBot.database.EmployeeRepository;
+import com.archpj.GetATestBot.services.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.commands.SetMyCommands;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.commands.scope.BotCommandScopeDefault;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.archpj.GetATestBot.components.BotCommands.COMMANDS;
 import static com.archpj.GetATestBot.components.BotCommands.HELP_TEXT;
@@ -33,7 +27,8 @@ public class TestBot extends TelegramLongPollingBot {
     final BotConfig botConfig;
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private EmployeeService employeeService;
+
 
     public TestBot (BotConfig botConfig) {
         this.botConfig = botConfig;
@@ -54,6 +49,7 @@ public class TestBot extends TelegramLongPollingBot {
 
 
     public void onUpdateReceived(Update update) {
+
         long chatId = 0;
         String userName = null;
         String receivedMessage;
@@ -91,15 +87,16 @@ public class TestBot extends TelegramLongPollingBot {
     }
 
     private void registerEmployee(Message message) {
-        if(employeeRepository.findById(message.getChatId()).isEmpty()) {
+        if(employeeService.findEmployee(message.getChatId()) == null) {
             long telegramId = message.getFrom().getId();
 
             Employee employee = new Employee();
             employee.setTelegramId(telegramId);
-            employee.setName(message.getFrom().getUserName());
+            employee.setName(message.getFrom().getFirstName() + " " +
+                    message.getFrom().getLastName());
             employee.setRegisteredAt(new Timestamp(System.currentTimeMillis()));
 
-            employeeRepository.save(employee);
+            employeeService.save(employee);
             log.info("Employee saved to database: " + employee);
         }
     }
@@ -133,38 +130,38 @@ public class TestBot extends TelegramLongPollingBot {
     }
 
 
-    public ReplyKeyboardMarkup sendStartMenu() {
-        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-
-        replyKeyboardMarkup.setSelective(true);
-        replyKeyboardMarkup.setResizeKeyboard(true);
-        replyKeyboardMarkup.setOneTimeKeyboard(false);
-        replyKeyboardMarkup.setKeyboard(keyboardRows());
-
-        return replyKeyboardMarkup;
-    }
-
-
-    public List<KeyboardRow> keyboardRows() {
-        List<KeyboardRow> rows = new ArrayList<>();
-
-        rows.add(new KeyboardRow(keyboardButtons("Тестируем")));
-        rows.add(new KeyboardRow(keyboardButtons("Импланталогия")));
-        rows.add(new KeyboardRow(keyboardButtons("Хирургия")));
-        rows.add(new KeyboardRow(keyboardButtons("Терапия")));
-        rows.add(new KeyboardRow(keyboardButtons("Гигиеническая чистка")));
-        rows.add(new KeyboardRow(keyboardButtons("Ортопедия")));
-        rows.add(new KeyboardRow(keyboardButtons("Ортодонтия")));
-
-        return rows;
-    }
-
-
-    public List<KeyboardButton> keyboardButtons(String theme) {
-        List<KeyboardButton> buttons = new ArrayList<>();
-
-        buttons.add(new KeyboardButton(theme));
-
-        return buttons;
-    }
+//    public ReplyKeyboardMarkup sendStartMenu() {
+//        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+//
+//        replyKeyboardMarkup.setSelective(true);
+//        replyKeyboardMarkup.setResizeKeyboard(true);
+//        replyKeyboardMarkup.setOneTimeKeyboard(false);
+//        replyKeyboardMarkup.setKeyboard(keyboardRows());
+//
+//        return replyKeyboardMarkup;
+//    }
+//
+//
+//    public List<KeyboardRow> keyboardRows() {
+//        List<KeyboardRow> rows = new ArrayList<>();
+//
+//        rows.add(new KeyboardRow(keyboardButtons("Тестируем")));
+//        rows.add(new KeyboardRow(keyboardButtons("Импланталогия")));
+//        rows.add(new KeyboardRow(keyboardButtons("Хирургия")));
+//        rows.add(new KeyboardRow(keyboardButtons("Терапия")));
+//        rows.add(new KeyboardRow(keyboardButtons("Гигиеническая чистка")));
+//        rows.add(new KeyboardRow(keyboardButtons("Ортопедия")));
+//        rows.add(new KeyboardRow(keyboardButtons("Ортодонтия")));
+//
+//        return rows;
+//    }
+//
+//
+//    public List<KeyboardButton> keyboardButtons(String theme) {
+//        List<KeyboardButton> buttons = new ArrayList<>();
+//
+//        buttons.add(new KeyboardButton(theme));
+//
+//        return buttons;
+//    }
 }
