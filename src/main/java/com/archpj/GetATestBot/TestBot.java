@@ -1,6 +1,7 @@
 package com.archpj.GetATestBot;
 
 import com.archpj.GetATestBot.components.Buttons;
+import com.archpj.GetATestBot.components.MenuOfSpecs;
 import com.archpj.GetATestBot.config.BotConfig;
 import com.archpj.GetATestBot.models.Employee;
 import com.archpj.GetATestBot.services.EmployeeService;
@@ -8,8 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.meta.api.methods.commands.SetMyCommands;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.commands.scope.BotCommandScopeDefault;
@@ -50,118 +53,106 @@ public class TestBot extends TelegramLongPollingBot {
 
     public void onUpdateReceived(Update update) {
 
-        long chatId = 0;
-        String userName = null;
-        String receivedMessage;
+        if (update.hasMessage()) {
+            Message incomingMessage = update.getMessage();
 
-        //если получено сообщение текстом
-        if(update.hasMessage()) {
-            chatId = update.getMessage().getChatId();
-            userName = update.getMessage().getFrom().getFirstName();
+            String employeeName = incomingMessage.getFrom().getFirstName() + " " + incomingMessage.getFrom().getLastName();
+            long employeeTelegramId = incomingMessage.getFrom().getId();
+            long chatId = update.getMessage().getChatId();
 
-            if (update.getMessage().hasText()) {
-                receivedMessage = update.getMessage().getText();
-                botAnswerUtils(receivedMessage, chatId, userName, update);
+            SendMessage message = null;
+
+            if (incomingMessage.getText().equals("/start")) {
+                if (!employeeService.hasEmployee(employeeTelegramId)) {
+                    employeeService.save(new Employee(employeeTelegramId, employeeName, new Timestamp(System.currentTimeMillis())));
+                }
+                message = SendMessage.builder().
+                        chatId(chatId).
+                        text("Желаете начать тест?").
+                        replyMarkup(Buttons.suggestTest()).
+                        build();
+
+            } else if (incomingMessage.getText().equals("/test")) {
+                if (!employeeService.hasEmployee(employeeTelegramId)) {
+                    employeeService.save(new Employee(employeeTelegramId, employeeName, new Timestamp(System.currentTimeMillis())));
+                }
+                message = SendMessage.builder().
+                        chatId(chatId).
+                        text("Выбирайте тему:").
+                        replyMarkup(MenuOfSpecs.sendMenu()).
+                        build();
+
+            } else if (incomingMessage.getText().equals("/help")) {
+                message = SendMessage.builder().
+                        chatId(chatId).
+                        text(HELP_TEXT).
+                        build();
+
+            } else if (incomingMessage.getText().startsWith("Выбрана тема:")) {
+
+            } else if (incomingMessage.getText().equals("Test begins")) {
+
+            } else {
+                message = SendMessage.builder().
+                        chatId(chatId).text("Вы что-то не то делайте.\n" +
+                                "(\"Нормально делай - нормально будет!\nСократ 429 год до н.э.\")\n" +
+                                "Если возникли трудности, нажмите \"/help\"").
+                        build();
             }
 
-            //если нажата одна из кнопок бота
+            try {
+                execute(message);
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
+            }
+
         } else if (update.hasCallbackQuery()) {
-            chatId = update.getCallbackQuery().getMessage().getChatId();
-            userName = update.getCallbackQuery().getFrom().getFirstName();
-            receivedMessage = update.getCallbackQuery().getData();
+            CallbackQuery callbackQuery = update.getCallbackQuery();
 
-            botAnswerUtils(receivedMessage, chatId, userName, update);
-        }
-    }
+            String employeeName = callbackQuery.getFrom().getFirstName() + " " + callbackQuery.getFrom().getLastName();
+            long employeeTelegramId = callbackQuery.getFrom().getId();
+            long chatId = callbackQuery.getMessage().getChatId();
 
-    private void botAnswerUtils(String receivedMessage, long chatId, String userName, Update update) {
-        switch (receivedMessage) {
-            case "/start" -> {
-                startBot(chatId, userName);
-                registerEmployee(update.getMessage());
+            SendMessage message = null;
+
+            if (callbackQuery.getData().equals("/test rejected")) {
+                message = SendMessage.builder().
+                        chatId(chatId).
+                        text("Ок.\nВы можете начать тест позднее выбрав пункт меню \"/test\"").
+                        build();
+                //Add sending of picture functional
+
+            } else if (callbackQuery.getData().equals("/test")) {
+                if (!employeeService.hasEmployee(employeeTelegramId)) {
+                    employeeService.save(new Employee(employeeTelegramId, employeeName, new Timestamp(System.currentTimeMillis())));
+                }
+                message = SendMessage.builder().
+                        chatId(chatId).
+                        text("Выбирайте тему:").
+                        replyMarkup(MenuOfSpecs.sendMenu()).
+                        build();
+
+            } else if (callbackQuery.getData().startsWith("Var")) {
+                //implement logic of processing answer
+
+            } else {
+                System.out.println();
+                message = SendMessage.builder().
+                        chatId(chatId).
+                        text("Query hadn't been processed").
+                        build();
+
             }
-            case "/help" -> sendHelpText(chatId, HELP_TEXT);
-            default -> {
+
+            AnswerCallbackQuery close = AnswerCallbackQuery.builder()
+                    .callbackQueryId(callbackQuery.getId()).build();
+
+            try {
+                execute(close);
+                execute(message);
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
             }
         }
     }
-
-    private void registerEmployee(Message message) {
-        if(employeeService.findEmployee(message.getChatId()) == null) {
-            long telegramId = message.getFrom().getId();
-
-            Employee employee = new Employee();
-            employee.setTelegramId(telegramId);
-            employee.setName(message.getFrom().getFirstName() + " " +
-                    message.getFrom().getLastName());
-            employee.setRegisteredAt(new Timestamp(System.currentTimeMillis()));
-
-            employeeService.save(employee);
-            log.info("Employee saved to database: " + employee);
-        }
-    }
-
-    private void startBot(long chatId, String userName) {
-        SendMessage message = new SendMessage();
-        message.setChatId(chatId);
-        message.setText("Hello, " + userName + "! I'm a Telegram bot.");
-        message.setReplyMarkup(Buttons.inlineMarkup());
-
-
-        try {
-            execute(message);
-            log.info("Reply sent");
-        } catch (TelegramApiException e){
-            log.error(e.getMessage());
-        }
-    }
-
-    private void sendHelpText(long chatId, String textToSend){
-        SendMessage message = new SendMessage();
-        message.setChatId(chatId);
-        message.setText(textToSend);
-
-        try {
-            execute(message);
-            log.info("Reply sent");
-        } catch (TelegramApiException e){
-            log.error(e.getMessage());
-        }
-    }
-
-
-//    public ReplyKeyboardMarkup sendStartMenu() {
-//        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-//
-//        replyKeyboardMarkup.setSelective(true);
-//        replyKeyboardMarkup.setResizeKeyboard(true);
-//        replyKeyboardMarkup.setOneTimeKeyboard(false);
-//        replyKeyboardMarkup.setKeyboard(keyboardRows());
-//
-//        return replyKeyboardMarkup;
-//    }
-//
-//
-//    public List<KeyboardRow> keyboardRows() {
-//        List<KeyboardRow> rows = new ArrayList<>();
-//
-//        rows.add(new KeyboardRow(keyboardButtons("Тестируем")));
-//        rows.add(new KeyboardRow(keyboardButtons("Импланталогия")));
-//        rows.add(new KeyboardRow(keyboardButtons("Хирургия")));
-//        rows.add(new KeyboardRow(keyboardButtons("Терапия")));
-//        rows.add(new KeyboardRow(keyboardButtons("Гигиеническая чистка")));
-//        rows.add(new KeyboardRow(keyboardButtons("Ортопедия")));
-//        rows.add(new KeyboardRow(keyboardButtons("Ортодонтия")));
-//
-//        return rows;
-//    }
-//
-//
-//    public List<KeyboardButton> keyboardButtons(String theme) {
-//        List<KeyboardButton> buttons = new ArrayList<>();
-//
-//        buttons.add(new KeyboardButton(theme));
-//
-//        return buttons;
-//    }
 }

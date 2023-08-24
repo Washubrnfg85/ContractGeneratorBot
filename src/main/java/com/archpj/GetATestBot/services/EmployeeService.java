@@ -36,4 +36,8 @@ public class EmployeeService {
     public void delete(long telegramId) {
         employeeRepository.deleteById(telegramId);
     }
+
+    public boolean hasEmployee(long telegramId) {
+        return employeeRepository.existsById(telegramId);
+    }
 }

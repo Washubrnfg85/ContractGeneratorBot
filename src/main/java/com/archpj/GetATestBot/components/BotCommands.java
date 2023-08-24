@@ -5,13 +5,17 @@ import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;
 import java.util.List;
 
 public interface BotCommands {
-    List<BotCommand> COMMANDS = List.of(
-            new BotCommand("/start", "start bot"),
-            new BotCommand("/help", "bot info")
+    final List<BotCommand> COMMANDS = List.of(
+            new BotCommand("/start", "Начать все сначала"),
+            new BotCommand("/test", "Начать тестирование"),
+            new BotCommand("/help", "Помощь")
     );
 
-    String HELP_TEXT =  "This bot will help to count the number of messages in the chat. " +
-            "The following commands are available to you:\n\n" +
-            "/start - start the bot\n" +
-            "/help - help menu";
+    String HELP_TEXT =  "Описание функционала и комманд:\n\n" +
+            "/help - доступные комманды и пояснения\n" +
+            "/test - выбрать тему и начать тест\n\n" +
+            "/start - перезапустить все сначала\n" +
+            "Каждая тема содержит около 10-15 вопросов. После прохождения теста сведения записываются в базу данных, " +
+            "а результат направляется Вашему работодателю. Вы можете в любой момент пройти тест заново, но предыдущие результаты будут стерты." +
+            "Вы свой результат заранее не знаете, так что если захотите пересдать тему - узнайте есть ли в этом необходимость.";
 }

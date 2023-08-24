@@ -21,6 +21,15 @@ public class Employee {
 
     private Timestamp registeredAt;
 
+    public Employee(long telegramId, String name, Timestamp registeredAt) {
+        this.telegramId = telegramId;
+        this.name = name;
+        this.registeredAt = registeredAt;
+    }
+
+    public Employee() {
+
+    }
 
     public long getTelegramId() {
         return telegramId;
