@@ -11,12 +11,12 @@ import java.util.List;
 
 @Service
 @Transactional
-public class SpecResultService {
+public class SpecResultsService {
 
     private SpecResultsRepository specResultsRepository;
 
     @Autowired
-    public SpecResultService(SpecResultsRepository specResultsRepository) {
+    public SpecResultsService(SpecResultsRepository specResultsRepository) {
         this.specResultsRepository = specResultsRepository;
     }
 

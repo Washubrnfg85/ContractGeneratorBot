@@ -24,12 +24,12 @@ public class MenuOfSpecs {
     public static List<KeyboardRow> keyboardRows() {
         List<KeyboardRow> rows = new ArrayList<>();
 
-        rows.add(new KeyboardRow(keyboardButtons("Импланталогия")));
-        rows.add(new KeyboardRow(keyboardButtons("Хирургия")));
-        rows.add(new KeyboardRow(keyboardButtons("Терапия")));
-        rows.add(new KeyboardRow(keyboardButtons("Гигиеническая чистка")));
-        rows.add(new KeyboardRow(keyboardButtons("Ортопедия")));
-        rows.add(new KeyboardRow(keyboardButtons("Ортодонтия")));
+        rows.add(new KeyboardRow(keyboardButtons(Specs.IMPLANT.getSpec())));
+        rows.add(new KeyboardRow(keyboardButtons(Specs.SURGERY.getSpec())));
+        rows.add(new KeyboardRow(keyboardButtons(Specs.THERAPY.getSpec())));
+        rows.add(new KeyboardRow(keyboardButtons(Specs.HYGIENIC_CLEANING.getSpec())));
+        rows.add(new KeyboardRow(keyboardButtons(Specs.ORTHOPEDY.getSpec())));
+        rows.add(new KeyboardRow(keyboardButtons(Specs.ORTHODONTY.getSpec())));
 
         return rows;
     }

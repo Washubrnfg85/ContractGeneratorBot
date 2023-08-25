@@ -41,22 +41,4 @@ public class Buttons {
 
         return keyboardMarkup;
     }
-
-//    public static InlineKeyboardMarkup inlineMarkup() {
-//        START_BUTTON.setCallbackData("/start");
-//        HELP_BUTTON.setCallbackData("/help");
-//        A_BUTTON.setCallbackData("A");
-//        B_BUTTON.setCallbackData("B");
-//        C_BUTTON.setCallbackData("C");
-//        D_BUTTON.setCallbackData("D");
-//
-//
-//        List<InlineKeyboardButton> rowInline = List.of(START_BUTTON, HELP_BUTTON);
-//        List<List<InlineKeyboardButton>> rowsInLine = List.of(rowInline);
-//
-//        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
-//        markupInline.setKeyboard(rowsInLine);
-//
-//        return markupInline;
-//    }
 }

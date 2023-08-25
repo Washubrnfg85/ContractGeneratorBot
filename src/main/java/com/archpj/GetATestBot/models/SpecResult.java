@@ -15,7 +15,7 @@ public class SpecResult {
 
     private String spec;
 
-    private String result;
+    private String results;
 
 
     public long getTelegramId() {
@@ -30,11 +30,11 @@ public class SpecResult {
         this.spec = spec;
     }
 
-    public String getResult() {
-        return result;
+    public String getResults() {
+        return results;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public void setResults(String results) {
+        this.results = results;
     }
 }
