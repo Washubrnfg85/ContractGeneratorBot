@@ -4,8 +4,10 @@ import com.archpj.GetATestBot.components.Buttons;
 import com.archpj.GetATestBot.components.MenuOfSpecs;
 import com.archpj.GetATestBot.config.BotConfig;
 import com.archpj.GetATestBot.models.Employee;
+import com.archpj.GetATestBot.models.SpecResult;
 import com.archpj.GetATestBot.models.SpecTest;
 import com.archpj.GetATestBot.services.EmployeeService;
+import com.archpj.GetATestBot.services.SpecResultsService;
 import com.archpj.GetATestBot.services.SpecTestService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,8 @@ public class TestBot extends TelegramLongPollingBot {
     private EmployeeService employeeService;
     @Autowired
     private SpecTestService specTestService;
+    @Autowired
+    private SpecResultsService specResultsService;
 
 
     public TestBot (BotConfig botConfig) {
@@ -105,11 +109,10 @@ public class TestBot extends TelegramLongPollingBot {
 
                 message = SendMessage.builder().
                         chatId(chatId).
-                        text(test.getQuestions().get(iterationThroughTest++)).
+                        text(test.getQuestions().get(iterationThroughTest)).
                         replyMarkup(Buttons.suggestAnswers()).
                         build();
-
-            } else if (incomingMessage.getText().equals("Test begins")) {
+                iterationThroughTest++;
 
             } else {
                 message = SendMessage.builder().
@@ -151,24 +154,42 @@ public class TestBot extends TelegramLongPollingBot {
                         replyMarkup(MenuOfSpecs.sendMenu()).
                         build();
 
-            } else if (callbackQuery.getData().equals("/A") ||
-                    callbackQuery.getData().equals("/B") ||
-                    callbackQuery.getData().equals("/C") ||
-                    callbackQuery.getData().equals("/D")) {
-                System.out.println(iterationThroughTest + " " + employeeAnswers);
-                while(iterationThroughTest < test.getQuestions().size()) {
-                    employeeAnswers += callbackQuery.getData();
-                    iterationThroughTest++;
-                }
-                System.out.println(iterationThroughTest + " " + employeeAnswers);
-                message = SendMessage.builder().
-                        chatId(chatId).
-                        text(test.getQuestions().get(iterationThroughTest++)).
-                        replyMarkup(Buttons.suggestAnswers()).
-                        build();
+            } else if (callbackQuery.getData().equals("A") ||
+                    callbackQuery.getData().equals("B") ||
+                    callbackQuery.getData().equals("C") ||
+                    callbackQuery.getData().equals("D")) {
 
+                if (iterationThroughTest < test.getQuestions().size()) {
+                    employeeAnswers += callbackQuery.getData();
+
+                    message = SendMessage.builder().
+                            chatId(chatId).
+                            text(test.getQuestions().get(iterationThroughTest)).
+                            replyMarkup(Buttons.suggestAnswers()).
+                            build();
+                    iterationThroughTest++;
+
+                } else {
+                    test.setEmployeeAnswers(employeeAnswers);
+                    iterationThroughTest = 0;
+                    test.calculateEmployeeScore();
+
+                    SpecResult specResult = new SpecResult(employeeTelegramId,
+                            test.getSpec(),
+                            test.getCorrectAnswer() + "\n" + test.getEmployeeAnswers(),
+                            test.getEmployeeScore()
+                            );
+                    specResultsService.saveSpecResult(specResult);
+
+                    message = SendMessage.builder().
+                            chatId(chatId).
+                            text("Тест завершен.\n" +
+                                    "Ваш результат: " + test.getEmployeeScore() +
+                                    "\nВы можете выбрать другую тему или пересдать эту.").
+                            build();
+
+                }
             } else {
-                System.out.println();
                 message = SendMessage.builder().
                         chatId(chatId).
                         text("Query hadn't been processed").

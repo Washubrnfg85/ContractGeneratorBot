@@ -33,4 +33,8 @@ public class SpecResultsService {
         }
         return result;
     }
+
+    public void saveSpecResult(SpecResult specResult) {
+        specResultsRepository.save(specResult);
+    }
 }

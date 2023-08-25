@@ -28,10 +28,10 @@ public class Buttons {
     }
 
     public static InlineKeyboardMarkup suggestAnswers() {
-        A_BUTTON.setCallbackData("/A");
-        B_BUTTON.setCallbackData("/B");
-        C_BUTTON.setCallbackData("/C");
-        D_BUTTON.setCallbackData("/D");
+        A_BUTTON.setCallbackData("A");
+        B_BUTTON.setCallbackData("B");
+        C_BUTTON.setCallbackData("C");
+        D_BUTTON.setCallbackData("D");
 
         List<InlineKeyboardButton> buttonsInRow = List.of(A_BUTTON, B_BUTTON, C_BUTTON, D_BUTTON);
         List<List<InlineKeyboardButton>> rows = List.of(buttonsInRow);

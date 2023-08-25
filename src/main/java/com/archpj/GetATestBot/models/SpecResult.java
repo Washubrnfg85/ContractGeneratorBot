@@ -17,9 +17,25 @@ public class SpecResult {
 
     private String results;
 
+    private String score;
+
+    public SpecResult(long telegramId, String spec, String results, String score) {
+        this.telegramId = telegramId;
+        this.spec = spec;
+        this.results = results;
+        this.score = score;
+    }
+
+    public SpecResult() {
+
+    }
 
     public long getTelegramId() {
         return telegramId;
+    }
+
+    public void setTelegramId(long telegramId) {
+        this.telegramId = telegramId;
     }
 
     public String getSpec() {
@@ -36,5 +52,13 @@ public class SpecResult {
 
     public void setResults(String results) {
         this.results = results;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
     }
 }
