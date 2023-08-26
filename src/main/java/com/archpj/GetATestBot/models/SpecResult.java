@@ -1,8 +1,6 @@
 package com.archpj.GetATestBot.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -11,6 +9,9 @@ import lombok.Data;
 public class SpecResult {
 
     @Id
+    @GeneratedValue
+    private int id;
+
     private long telegramId;
 
     private String spec;
@@ -30,35 +31,8 @@ public class SpecResult {
 
     }
 
-    public long getTelegramId() {
-        return telegramId;
-    }
-
-    public void setTelegramId(long telegramId) {
-        this.telegramId = telegramId;
-    }
-
     public String getSpec() {
         return spec;
     }
 
-    public void setSpec(String spec) {
-        this.spec = spec;
-    }
-
-    public String getResults() {
-        return results;
-    }
-
-    public void setResults(String results) {
-        this.results = results;
-    }
-
-    public String getScore() {
-        return score;
-    }
-
-    public void setScore(String score) {
-        this.score = score;
-    }
 }

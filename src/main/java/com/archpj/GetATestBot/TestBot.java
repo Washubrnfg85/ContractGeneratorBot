@@ -73,6 +73,9 @@ public class TestBot extends TelegramLongPollingBot {
             SendMessage message = null;
 
             if (incomingMessage.getText().equals("/start")) {
+                iterationThroughTest = 0;
+                employeeAnswers = "";
+
                 if (!employeeService.hasEmployee(employeeTelegramId)) {
                     employeeService.save(new Employee(employeeTelegramId, employeeName, new Timestamp(System.currentTimeMillis())));
                 }
@@ -83,6 +86,9 @@ public class TestBot extends TelegramLongPollingBot {
                         build();
 
             } else if (incomingMessage.getText().equals("/test")) {
+                iterationThroughTest = 0;
+                employeeAnswers = "";
+
                 if (!employeeService.hasEmployee(employeeTelegramId)) {
                     employeeService.save(new Employee(employeeTelegramId, employeeName, new Timestamp(System.currentTimeMillis())));
                 }
@@ -104,6 +110,9 @@ public class TestBot extends TelegramLongPollingBot {
                     incomingMessage.getText().equals("Гигиеническая чистка") ||
                     incomingMessage.getText().equals("Ортопедия") ||
                     incomingMessage.getText().equals("Ортодонтия")) {
+
+                iterationThroughTest = 0;
+                employeeAnswers = "";
 
                 test = new SpecTest(specTestService, incomingMessage.getText());
 
@@ -145,6 +154,9 @@ public class TestBot extends TelegramLongPollingBot {
                 //Add sending of picture functional
 
             } else if (callbackQuery.getData().equals("/test")) {
+                iterationThroughTest = 0;
+                employeeAnswers = "";
+
                 if (!employeeService.hasEmployee(employeeTelegramId)) {
                     employeeService.save(new Employee(employeeTelegramId, employeeName, new Timestamp(System.currentTimeMillis())));
                 }
@@ -170,8 +182,10 @@ public class TestBot extends TelegramLongPollingBot {
                     iterationThroughTest++;
 
                 } else {
+                    employeeAnswers += callbackQuery.getData();
                     test.setEmployeeAnswers(employeeAnswers);
                     iterationThroughTest = 0;
+                    employeeAnswers = "";
                     test.calculateEmployeeScore();
 
                     SpecResult specResult = new SpecResult(employeeTelegramId,
