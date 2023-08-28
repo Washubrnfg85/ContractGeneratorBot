@@ -5,8 +5,8 @@ public enum Specs {
     SURGERY ("Хирургия"),
     THERAPY ("Терапия"),
     HYGIENIC_CLEANING ("Гигиеническая чистка"),
-    ORTHOPEDY ("Ортопедия"),
-    ORTHODONTY ("Ортодонтия");
+    ORTHOPEDIC ("Ортопедия"),
+    ORTHODONTIC ("Ортодонтия");
 
     private String spec;
 

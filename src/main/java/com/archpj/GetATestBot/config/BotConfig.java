@@ -12,6 +12,6 @@ public class BotConfig {
 
     @Value("${bot.token}") String token;
     @Value("${bot.name}") String name;
-    @Value("${bot.chatId}") String chatId;
+    @Value("${bot.adminId}") long adminTelegramId;
 
 }

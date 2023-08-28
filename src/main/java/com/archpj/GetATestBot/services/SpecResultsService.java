@@ -3,6 +3,7 @@ package com.archpj.GetATestBot.services;
 import com.archpj.GetATestBot.database.SpecResultsRepository;
 import com.archpj.GetATestBot.models.SpecResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import java.util.List;
 public class SpecResultsService {
 
     private SpecResultsRepository specResultsRepository;
+
 
     @Autowired
     public SpecResultsService(SpecResultsRepository specResultsRepository) {
@@ -36,5 +38,21 @@ public class SpecResultsService {
 
     public void saveSpecResult(SpecResult specResult) {
         specResultsRepository.save(specResult);
+    }
+
+    public void updateSpecResult(SpecResult specResult) {
+        Long telegramId = specResult.getTelegramId();
+        String results = specResult.getResults();
+        String score = specResult.getScore();
+        String spec = specResult.getSpec();
+
+        specResultsRepository.updateSpecResult(telegramId, results, score, spec);
+    }
+
+    public boolean checkIfPresents(SpecResult specResult) {
+        Long telegramId = specResult.getTelegramId();
+        String spec = specResult.getSpec();
+
+        return specResultsRepository.checkIfPresents(telegramId, spec);
     }
 }

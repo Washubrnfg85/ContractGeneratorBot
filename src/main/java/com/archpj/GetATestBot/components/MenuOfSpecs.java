@@ -28,8 +28,8 @@ public class MenuOfSpecs {
         rows.add(new KeyboardRow(keyboardButtons(Specs.SURGERY.getSpec())));
         rows.add(new KeyboardRow(keyboardButtons(Specs.THERAPY.getSpec())));
         rows.add(new KeyboardRow(keyboardButtons(Specs.HYGIENIC_CLEANING.getSpec())));
-        rows.add(new KeyboardRow(keyboardButtons(Specs.ORTHOPEDY.getSpec())));
-        rows.add(new KeyboardRow(keyboardButtons(Specs.ORTHODONTY.getSpec())));
+        rows.add(new KeyboardRow(keyboardButtons(Specs.ORTHOPEDIC.getSpec())));
+        rows.add(new KeyboardRow(keyboardButtons(Specs.ORTHODONTIC.getSpec())));
 
         return rows;
     }

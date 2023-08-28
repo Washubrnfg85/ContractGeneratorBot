@@ -32,6 +32,7 @@ import static com.archpj.GetATestBot.components.BotCommands.HELP_TEXT;
 public class TestBot extends TelegramLongPollingBot {
 
     final BotConfig botConfig;
+    private String spec;
     private SpecTest test = null;
     private int iterationThroughTest = 0;
     private String employeeAnswers = "";
@@ -63,6 +64,7 @@ public class TestBot extends TelegramLongPollingBot {
 
 
     public void onUpdateReceived(Update update) {
+        long adminTelegramId = botConfig.getAdminTelegramId();
 
         if (update.hasMessage()) {
 
@@ -70,7 +72,7 @@ public class TestBot extends TelegramLongPollingBot {
             String employeeName = incomingMessage.getFrom().getFirstName() + " " + incomingMessage.getFrom().getLastName();
             long employeeTelegramId = incomingMessage.getFrom().getId();
             long chatId = update.getMessage().getChatId();
-            SendMessage message = null;
+            SendMessage message;
 
             if (incomingMessage.getText().equals("/start")) {
                 iterationThroughTest = 0;
@@ -111,10 +113,11 @@ public class TestBot extends TelegramLongPollingBot {
                     incomingMessage.getText().equals("Ортопедия") ||
                     incomingMessage.getText().equals("Ортодонтия")) {
 
+                spec = incomingMessage.getText();
                 iterationThroughTest = 0;
                 employeeAnswers = "";
 
-                test = new SpecTest(specTestService, incomingMessage.getText());
+                test = new SpecTest(specTestService, spec);
 
                 message = SendMessage.builder().
                         chatId(chatId).
@@ -125,9 +128,11 @@ public class TestBot extends TelegramLongPollingBot {
 
             } else {
                 message = SendMessage.builder().
-                        chatId(chatId).text("Вы что-то не то делайте.\n" +
-                                "(\"Нормально делай - нормально будет!\nСократ 429 год до н.э.\")\n" +
-                                "Если возникли трудности, нажмите \"/help\"").
+                        chatId(chatId).text("""
+                                Вы что-то не то делайте.
+                                ("Нормально делай - нормально будет!
+                                Сократ 429 год до н.э.")
+                                Если возникли трудности, нажмите "/help\"""").
                         build();
             }
 
@@ -193,14 +198,21 @@ public class TestBot extends TelegramLongPollingBot {
                             test.getCorrectAnswer() + "\n" + test.getEmployeeAnswers(),
                             test.getEmployeeScore()
                             );
-                    specResultsService.saveSpecResult(specResult);
+
+                    if (specResultsService.checkIfPresents(specResult)) {
+                        specResultsService.updateSpecResult(specResult);
+                    } else {
+                        specResultsService.saveSpecResult(specResult);
+                    }
 
                     message = SendMessage.builder().
                             chatId(chatId).
-                            text("Тест завершен.\n" +
+                            text("Тест по теме " + spec + " завершен.\n" +
                                     "Ваш результат: " + test.getEmployeeScore() +
                                     "\nВы можете выбрать другую тему или пересдать эту.").
                             build();
+
+                    sendResultToAdmin(adminTelegramId, employeeName);
 
                 }
             } else {
@@ -220,6 +232,20 @@ public class TestBot extends TelegramLongPollingBot {
             } catch (TelegramApiException e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
+
+    public void sendResultToAdmin(Long adminTelegramId, String employeeName) {
+        SendMessage messageToAdmin= SendMessage.builder().
+                chatId(adminTelegramId).
+                text(employeeName + " прошел тест по теме " + spec + ".\n" +
+                        "с результатом: " + test.getEmployeeScore()).
+                build();
+
+        try {
+            execute(messageToAdmin);
+        } catch (TelegramApiException e) {
+            throw new RuntimeException(e);
         }
     }
 }
