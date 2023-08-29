@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "spec_results")
-public class SpecResult {
+@Table(name = "quiz_results")
+public class QuizResult {
 
     @Id
     @GeneratedValue
@@ -18,16 +18,17 @@ public class SpecResult {
 
     private String results;
 
+    @Transient
     private String score;
 
-    public SpecResult(long telegramId, String spec, String results, String score) {
+    public QuizResult(long telegramId, String spec, String results, String score) {
         this.telegramId = telegramId;
         this.spec = spec;
         this.results = results;
         this.score = score;
     }
 
-    public SpecResult() {
+    public QuizResult() {
 
     }
 

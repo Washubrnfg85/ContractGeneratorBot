@@ -1,6 +1,6 @@
 package com.archpj.GetATestBot.models;
 
-import com.archpj.GetATestBot.services.SpecTestService;
+import com.archpj.GetATestBot.services.QuizService;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -11,10 +11,10 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "spec_test")
-public class SpecTest {
+@Table(name = "quiz_questions")
+public class Quiz {
     @Transient
-    private SpecTestService specTestService;
+    private QuizService quizService;
 
     @Transient
     private List<String> questions;
@@ -33,12 +33,12 @@ public class SpecTest {
     private String question;
     private String correctAnswer;
 
-    public SpecTest(SpecTestService specTestService, String spec) {
-        this.specTestService = specTestService;
+    public Quiz(QuizService quizService, String spec) {
+        this.quizService = quizService;
         this.spec = spec;
 
-        questions = specTestService.loadSpecQuestions(spec);
-        correctAnswer = specTestService.loadCorrectAnswers(spec);
+        questions = quizService.loadSpecQuestions(spec);
+        correctAnswer = quizService.loadCorrectAnswers(spec);
         this.employeeAnswers = "";
     }
 

@@ -4,11 +4,11 @@ import com.archpj.GetATestBot.components.Buttons;
 import com.archpj.GetATestBot.components.MenuOfSpecs;
 import com.archpj.GetATestBot.config.BotConfig;
 import com.archpj.GetATestBot.models.Employee;
-import com.archpj.GetATestBot.models.SpecResult;
-import com.archpj.GetATestBot.models.SpecTest;
+import com.archpj.GetATestBot.models.QuizResult;
+import com.archpj.GetATestBot.models.Quiz;
 import com.archpj.GetATestBot.services.EmployeeService;
-import com.archpj.GetATestBot.services.SpecResultsService;
-import com.archpj.GetATestBot.services.SpecTestService;
+import com.archpj.GetATestBot.services.QuizResultsService;
+import com.archpj.GetATestBot.services.QuizService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,16 +33,16 @@ public class TestBot extends TelegramLongPollingBot {
 
     final BotConfig botConfig;
     private String spec;
-    private SpecTest test = null;
+    private Quiz test = null;
     private int iterationThroughTest = 0;
     private String employeeAnswers = "";
 
     @Autowired
     private EmployeeService employeeService;
     @Autowired
-    private SpecTestService specTestService;
+    private QuizService quizService;
     @Autowired
-    private SpecResultsService specResultsService;
+    private QuizResultsService quizResultsService;
 
 
     public TestBot (BotConfig botConfig) {
@@ -117,7 +117,7 @@ public class TestBot extends TelegramLongPollingBot {
                 iterationThroughTest = 0;
                 employeeAnswers = "";
 
-                test = new SpecTest(specTestService, spec);
+                test = new Quiz(quizService, spec);
 
                 message = SendMessage.builder().
                         chatId(chatId).
@@ -193,16 +193,16 @@ public class TestBot extends TelegramLongPollingBot {
                     employeeAnswers = "";
                     test.calculateEmployeeScore();
 
-                    SpecResult specResult = new SpecResult(employeeTelegramId,
+                    QuizResult quizResult = new QuizResult(employeeTelegramId,
                             test.getSpec(),
                             test.getCorrectAnswer() + "\n" + test.getEmployeeAnswers(),
                             test.getEmployeeScore()
                             );
 
-                    if (specResultsService.checkIfPresents(specResult)) {
-                        specResultsService.updateSpecResult(specResult);
+                    if (quizResultsService.checkIfPresents(quizResult)) {
+                        quizResultsService.updateSpecResult(quizResult);
                     } else {
-                        specResultsService.saveSpecResult(specResult);
+                        quizResultsService.saveSpecResult(quizResult);
                     }
 
                     message = SendMessage.builder().

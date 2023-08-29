@@ -1,6 +1,6 @@
 package com.archpj.GetATestBot.services;
 
-import com.archpj.GetATestBot.database.SpecTestRepository;
+import com.archpj.GetATestBot.database.QuizRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,21 +9,21 @@ import java.util.List;
 
 @Service
 @Transactional
-public class SpecTestService {
+public class QuizService {
 
-    private final SpecTestRepository specTestRepository;
+    private final QuizRepository quizRepository;
 
     @Autowired
-    public SpecTestService(SpecTestRepository specTestRepository) {
-        this.specTestRepository = specTestRepository;
+    public QuizService(QuizRepository quizRepository) {
+        this.quizRepository = quizRepository;
     }
 
     public List<String> loadSpecQuestions(String spec) {
-        return specTestRepository.loadSpecQuestions(spec);
+        return quizRepository.loadSpecQuestions(spec);
     }
 
     public String loadCorrectAnswers(String spec) {
-        List<String> correctAnswers = specTestRepository.loadCorrectAnswers(spec);
+        List<String> correctAnswers = quizRepository.loadCorrectAnswers(spec);
         String result = "";
 
         for (int i = 0; i < correctAnswers.size(); i++) {
