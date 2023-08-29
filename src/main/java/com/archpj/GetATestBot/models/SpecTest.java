@@ -11,7 +11,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "spec_test_data")
+@Table(name = "spec_test")
 public class SpecTest {
     @Transient
     private SpecTestService specTestService;
@@ -72,4 +72,22 @@ public class SpecTest {
             }
         }
     }
+
+//    Method hasn't been tested yet.
+//
+//    public String getDetailedResult() {
+//        List<String> derailedResults = new ArrayList<>(questions.size());
+//
+//        String[] correctLetters = correctAnswer.split("");
+//        String[] employeeLetters = employeeAnswers.split("");
+//
+//        for (int i = 0; i < derailedResults.size(); i++) {
+//            derailedResults.add(i, questions.get(i) +
+//                    "\nВерный ответ: " + correctLetters[i] +
+//                    "\nДан ответ: " + employeeLetters[i]);
+//        }
+//
+//
+//        return derailedResults.toString();
+//    }
 }

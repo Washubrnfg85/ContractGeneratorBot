@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
 public interface SpecResultsRepository extends JpaRepository<SpecResult, Long> {
 
     @Modifying
-    @Query(value = "update spec_results_data set telegram_id = ?1, results = ?2, score = ?3, spec = ?4 where telegram_id = ?1 and spec = ?4", nativeQuery = true)
+    @Query(value = "update spec_results set telegram_id = ?1, results = ?2, score = ?3, spec = ?4 where telegram_id = ?1 and spec = ?4", nativeQuery = true)
     void updateSpecResult(Long telegramId, String results, String score, String spec);
 
-    @Query(value = "SELECT EXISTS (SELECT * FROM spec_results_data WHERE telegram_id = ?1 and spec = ?2);", nativeQuery = true)
+    @Query(value = "SELECT EXISTS (SELECT * FROM spec_results WHERE telegram_id = ?1 and spec = ?2);", nativeQuery = true)
     boolean checkIfPresents(Long telegramId, String spec);
 }

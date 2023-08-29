@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Buttons {
     private static final InlineKeyboardButton START_TEST = new InlineKeyboardButton("Начать тест");
-    private static final InlineKeyboardButton REJECT_TEST_BUTTON = new InlineKeyboardButton("Отказ от теста");
+    private static final InlineKeyboardButton REJECT_TEST_BUTTON = new InlineKeyboardButton("Не сейчас");
     private static final InlineKeyboardButton A_BUTTON = new InlineKeyboardButton("A");
     private static final InlineKeyboardButton B_BUTTON = new InlineKeyboardButton("B");
     private static final InlineKeyboardButton C_BUTTON = new InlineKeyboardButton("C");

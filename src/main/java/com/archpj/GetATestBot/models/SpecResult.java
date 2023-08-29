@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "spec_results_data")
+@Table(name = "spec_results")
 public class SpecResult {
 
     @Id
