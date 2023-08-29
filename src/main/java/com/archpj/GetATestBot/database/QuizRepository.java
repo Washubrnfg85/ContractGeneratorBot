@@ -10,9 +10,9 @@ import java.util.List;
 @Repository
 public interface QuizRepository extends JpaRepository<Quiz, Integer> {
 
-    @Query(value = "select question from quiz_questions where spec = ?1", nativeQuery = true)
-    List<String> loadSpecQuestions(String spec);
+    @Query(value = "select question from quiz_questions where specialisation = ?1", nativeQuery = true)
+    List<String> loadSpecQuestions(String specialisation);
 
-    @Query(value = "select correct_answer from quiz_questions where spec = ?1", nativeQuery = true)
-    List<String> loadCorrectAnswers(String spec);
+    @Query(value = "select correct_answer from quiz_questions where specialisation = ?1", nativeQuery = true)
+    List<String> loadCorrectAnswers(String specialisation);
 }

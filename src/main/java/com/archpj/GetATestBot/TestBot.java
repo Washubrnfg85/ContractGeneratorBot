@@ -194,15 +194,15 @@ public class TestBot extends TelegramLongPollingBot {
                     test.calculateEmployeeScore();
 
                     QuizResult quizResult = new QuizResult(employeeTelegramId,
-                            test.getSpec(),
+                            test.getSpecialisation(),
                             test.getCorrectAnswer() + "\n" + test.getEmployeeAnswers(),
                             test.getEmployeeScore()
                             );
 
                     if (quizResultsService.checkIfPresents(quizResult)) {
-                        quizResultsService.updateSpecResult(quizResult);
+                        quizResultsService.updateQuizResult(quizResult);
                     } else {
-                        quizResultsService.saveSpecResult(quizResult);
+                        quizResultsService.saveQuizResult(quizResult);
                     }
 
                     message = SendMessage.builder().

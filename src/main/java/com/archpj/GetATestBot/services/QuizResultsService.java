@@ -25,33 +25,33 @@ public class QuizResultsService {
         return quizResultsRepository.findAllById(Collections.singleton(telegramId));
     }
 
-    public QuizResult findEmployeeSpecResult(long telegramId, String spec) {
+    public QuizResult findEmployeeSpecResult(long telegramId, String specialisation) {
         QuizResult result = null;
         for(QuizResult quizResult : findAllById(telegramId)) {
-            if(quizResult.getSpec().equals(spec)) {
+            if(quizResult.getSpecialisation().equals(specialisation)) {
                 result = quizResult;
             }
         }
         return result;
     }
 
-    public void saveSpecResult(QuizResult quizResult) {
+    public void saveQuizResult(QuizResult quizResult) {
         quizResultsRepository.save(quizResult);
     }
 
-    public void updateSpecResult(QuizResult quizResult) {
+    public void updateQuizResult(QuizResult quizResult) {
         Long telegramId = quizResult.getTelegramId();
         String results = quizResult.getResults();
         String score = quizResult.getScore();
-        String spec = quizResult.getSpec();
+        String specialisation = quizResult.getSpecialisation();
 
-        quizResultsRepository.updateSpecResult(telegramId, results, score, spec);
+        quizResultsRepository.updateSpecResult(telegramId, results, score, specialisation);
     }
 
     public boolean checkIfPresents(QuizResult quizResult) {
         Long telegramId = quizResult.getTelegramId();
-        String spec = quizResult.getSpec();
+        String specialisation = quizResult.getSpecialisation();
 
-        return quizResultsRepository.checkIfPresents(telegramId, spec);
+        return quizResultsRepository.checkIfPresents(telegramId, specialisation);
     }
 }

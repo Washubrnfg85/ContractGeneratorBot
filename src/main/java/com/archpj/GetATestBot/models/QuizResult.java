@@ -14,16 +14,16 @@ public class QuizResult {
 
     private long telegramId;
 
-    private String spec;
+    private String specialisation;
 
     private String results;
 
     @Transient
     private String score;
 
-    public QuizResult(long telegramId, String spec, String results, String score) {
+    public QuizResult(long telegramId, String specialisation, String results, String score) {
         this.telegramId = telegramId;
-        this.spec = spec;
+        this.specialisation = specialisation;
         this.results = results;
         this.score = score;
     }
@@ -32,8 +32,8 @@ public class QuizResult {
 
     }
 
-    public String getSpec() {
-        return spec;
+    public String getSpecialisation() {
+        return specialisation;
     }
 
 }

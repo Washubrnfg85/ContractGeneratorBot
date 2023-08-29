@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,21 +19,8 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public List<Employee> findAll() {
-        return employeeRepository.findAll();
-    }
-
-    public Employee findEmployee(long telegramId) {
-        Optional<Employee> foundEmployee = employeeRepository.findById(telegramId);
-        return foundEmployee.orElse(null);
-    }
-
     public void save(Employee employee) {
         employeeRepository.save(employee);
-    }
-
-    public void delete(long telegramId) {
-        employeeRepository.deleteById(telegramId);
     }
 
     public boolean hasEmployee(long telegramId) {

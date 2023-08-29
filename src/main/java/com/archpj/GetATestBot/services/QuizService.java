@@ -18,12 +18,12 @@ public class QuizService {
         this.quizRepository = quizRepository;
     }
 
-    public List<String> loadSpecQuestions(String spec) {
-        return quizRepository.loadSpecQuestions(spec);
+    public List<String> loadQuizQuestions(String specialisation) {
+        return quizRepository.loadSpecQuestions(specialisation);
     }
 
-    public String loadCorrectAnswers(String spec) {
-        List<String> correctAnswers = quizRepository.loadCorrectAnswers(spec);
+    public String loadCorrectAnswers(String specialisation) {
+        List<String> correctAnswers = quizRepository.loadCorrectAnswers(specialisation);
         String result = "";
 
         for (int i = 0; i < correctAnswers.size(); i++) {

@@ -29,16 +29,16 @@ public class Quiz {
 
     @Id
     private int questionId;
-    private String spec;
+    private String specialisation;
     private String question;
     private String correctAnswer;
 
-    public Quiz(QuizService quizService, String spec) {
+    public Quiz(QuizService quizService, String specialisation) {
         this.quizService = quizService;
-        this.spec = spec;
+        this.specialisation = specialisation;
 
-        questions = quizService.loadSpecQuestions(spec);
-        correctAnswer = quizService.loadCorrectAnswers(spec);
+        questions = quizService.loadQuizQuestions(specialisation);
+        correctAnswer = quizService.loadCorrectAnswers(specialisation);
         this.employeeAnswers = "";
     }
 
