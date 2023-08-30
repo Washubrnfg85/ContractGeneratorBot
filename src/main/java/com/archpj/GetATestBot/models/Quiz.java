@@ -50,22 +50,4 @@ public class Quiz {
         this.employeeAnswers = employeeAnswers;
     }
 
-
-//    Method hasn't been tested yet.
-//
-//    public String getDetailedResult() {
-//        List<String> derailedResults = new ArrayList<>(questions.size());
-//
-//        String[] correctLetters = correctAnswer.split("");
-//        String[] employeeLetters = employeeAnswers.split("");
-//
-//        for (int i = 0; i < derailedResults.size(); i++) {
-//            derailedResults.add(i, questions.get(i) +
-//                    "\nВерный ответ: " + correctLetters[i] +
-//                    "\nДан ответ: " + employeeLetters[i]);
-//        }
-//
-//
-//        return derailedResults.toString();
-//    }
 }
