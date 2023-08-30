@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.List;
+import java.sql.Timestamp;
 
 @Service
 @Transactional
@@ -21,31 +20,18 @@ public class QuizResultsService {
         this.quizResultsRepository = quizResultsRepository;
     }
 
-    public List<QuizResult> findAllById(long telegramId) {
-        return quizResultsRepository.findAllById(Collections.singleton(telegramId));
-    }
-
-    public QuizResult findEmployeeSpecResult(long telegramId, String specialisation) {
-        QuizResult result = null;
-        for(QuizResult quizResult : findAllById(telegramId)) {
-            if(quizResult.getSpecialisation().equals(specialisation)) {
-                result = quizResult;
-            }
-        }
-        return result;
-    }
-
     public void saveQuizResult(QuizResult quizResult) {
         quizResultsRepository.save(quizResult);
     }
 
     public void updateQuizResult(QuizResult quizResult) {
         Long telegramId = quizResult.getTelegramId();
+        String employeeName = quizResult.getEmployeeName();
         String results = quizResult.getResults();
-        String score = quizResult.getScore();
         String specialisation = quizResult.getSpecialisation();
+        Timestamp timestamp = quizResult.getTimestamp();
 
-        quizResultsRepository.updateSpecResult(telegramId, results, score, specialisation);
+        quizResultsRepository.updateSpecResult(telegramId, employeeName, results, specialisation, timestamp);
     }
 
     public boolean checkIfPresents(QuizResult quizResult) {
@@ -54,4 +40,6 @@ public class QuizResultsService {
 
         return quizResultsRepository.checkIfPresents(telegramId, specialisation);
     }
+
+
 }

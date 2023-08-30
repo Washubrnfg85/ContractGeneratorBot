@@ -19,7 +19,7 @@ public class QuizService {
     }
 
     public List<String> loadQuizQuestions(String specialisation) {
-        return quizRepository.loadSpecQuestions(specialisation);
+        return quizRepository.loadQuizQuestions(specialisation);
     }
 
     public String loadCorrectAnswers(String specialisation) {

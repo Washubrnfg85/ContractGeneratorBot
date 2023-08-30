@@ -1,6 +1,6 @@
 package com.archpj.GetATestBot.components;
 
-public enum Specs {
+public enum Specialisations {
     IMPLANT ("Имплантология"),
     SURGERY ("Хирургия"),
     THERAPY ("Терапия"),
@@ -8,13 +8,13 @@ public enum Specs {
     ORTHOPEDIC ("Ортопедия"),
     ORTHODONTIC ("Ортодонтия");
 
-    private String spec;
+    private String specialisation;
 
-    Specs(String spec) {
-        this.spec = spec;
+    Specialisations(String specialisation) {
+        this.specialisation = specialisation;
     }
 
-    public String getSpec() {
-        return spec;
+    public String getSpecialisation() {
+        return specialisation;
     }
 }

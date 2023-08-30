@@ -3,10 +3,8 @@ package com.archpj.GetATestBot;
 import com.archpj.GetATestBot.components.Buttons;
 import com.archpj.GetATestBot.components.MenuOfSpecs;
 import com.archpj.GetATestBot.config.BotConfig;
-import com.archpj.GetATestBot.models.Employee;
 import com.archpj.GetATestBot.models.QuizResult;
 import com.archpj.GetATestBot.models.Quiz;
-import com.archpj.GetATestBot.services.EmployeeService;
 import com.archpj.GetATestBot.services.QuizResultsService;
 import com.archpj.GetATestBot.services.QuizService;
 import lombok.extern.slf4j.Slf4j;
@@ -32,13 +30,12 @@ import static com.archpj.GetATestBot.components.BotCommands.HELP_TEXT;
 public class TestBot extends TelegramLongPollingBot {
 
     final BotConfig botConfig;
-    private String spec;
-    private Quiz test = null;
+    private String specialisation;
+    private Quiz quiz = null;
+    private QuizResult quizResult;
     private int iterationThroughTest = 0;
     private String employeeAnswers = "";
 
-    @Autowired
-    private EmployeeService employeeService;
     @Autowired
     private QuizService quizService;
     @Autowired
@@ -69,8 +66,6 @@ public class TestBot extends TelegramLongPollingBot {
         if (update.hasMessage()) {
 
             Message incomingMessage = update.getMessage();
-            String employeeName = incomingMessage.getFrom().getFirstName() + " " + incomingMessage.getFrom().getLastName();
-            long employeeTelegramId = incomingMessage.getFrom().getId();
             long chatId = update.getMessage().getChatId();
             SendMessage message;
 
@@ -78,9 +73,6 @@ public class TestBot extends TelegramLongPollingBot {
                 iterationThroughTest = 0;
                 employeeAnswers = "";
 
-                if (!employeeService.hasEmployee(employeeTelegramId)) {
-                    employeeService.save(new Employee(employeeTelegramId, employeeName, new Timestamp(System.currentTimeMillis())));
-                }
                 message = SendMessage.builder().
                         chatId(chatId).
                         text("Желаете начать тест?").
@@ -91,9 +83,6 @@ public class TestBot extends TelegramLongPollingBot {
                 iterationThroughTest = 0;
                 employeeAnswers = "";
 
-                if (!employeeService.hasEmployee(employeeTelegramId)) {
-                    employeeService.save(new Employee(employeeTelegramId, employeeName, new Timestamp(System.currentTimeMillis())));
-                }
                 message = SendMessage.builder().
                         chatId(chatId).
                         text("Выбирайте тему:").
@@ -113,15 +102,15 @@ public class TestBot extends TelegramLongPollingBot {
                     incomingMessage.getText().equals("Ортопедия") ||
                     incomingMessage.getText().equals("Ортодонтия")) {
 
-                spec = incomingMessage.getText();
+                specialisation = incomingMessage.getText();
                 iterationThroughTest = 0;
                 employeeAnswers = "";
 
-                test = new Quiz(quizService, spec);
+                quiz = new Quiz(quizService, specialisation);
 
                 message = SendMessage.builder().
                         chatId(chatId).
-                        text(test.getQuestions().get(iterationThroughTest)).
+                        text(quiz.getQuestions().get(iterationThroughTest)).
                         replyMarkup(Buttons.suggestAnswers()).
                         build();
                 iterationThroughTest++;
@@ -162,9 +151,6 @@ public class TestBot extends TelegramLongPollingBot {
                 iterationThroughTest = 0;
                 employeeAnswers = "";
 
-                if (!employeeService.hasEmployee(employeeTelegramId)) {
-                    employeeService.save(new Employee(employeeTelegramId, employeeName, new Timestamp(System.currentTimeMillis())));
-                }
                 message = SendMessage.builder().
                         chatId(chatId).
                         text("Выбирайте тему:").
@@ -176,39 +162,40 @@ public class TestBot extends TelegramLongPollingBot {
                     callbackQuery.getData().equals("C") ||
                     callbackQuery.getData().equals("D")) {
 
-                if (iterationThroughTest < test.getQuestions().size()) {
-                    employeeAnswers += callbackQuery.getData();
+                employeeAnswers += callbackQuery.getData();
+                if (iterationThroughTest < quiz.getQuestions().size()) {
 
                     message = SendMessage.builder().
                             chatId(chatId).
-                            text(test.getQuestions().get(iterationThroughTest)).
+                            text(quiz.getQuestions().get(iterationThroughTest)).
                             replyMarkup(Buttons.suggestAnswers()).
                             build();
                     iterationThroughTest++;
 
                 } else {
-                    employeeAnswers += callbackQuery.getData();
-                    test.setEmployeeAnswers(employeeAnswers);
+                    quiz.setEmployeeAnswers(employeeAnswers);
                     iterationThroughTest = 0;
                     employeeAnswers = "";
-                    test.calculateEmployeeScore();
 
-                    QuizResult quizResult = new QuizResult(employeeTelegramId,
-                            test.getSpecialisation(),
-                            test.getCorrectAnswer() + "\n" + test.getEmployeeAnswers(),
-                            test.getEmployeeScore()
-                            );
+                    quizResult = new QuizResult(employeeTelegramId,
+                            employeeName,
+                            quiz.getSpecialisation(),
+                            quiz.getCorrectAnswer() + "\n" + quiz.getEmployeeAnswers(),
+                            new Timestamp(System.currentTimeMillis()));
+                    quizResult.calculateEmployeeScore();
+                    quizResultsService.saveQuizResult(quizResult);
 
-                    if (quizResultsService.checkIfPresents(quizResult)) {
-                        quizResultsService.updateQuizResult(quizResult);
-                    } else {
-                        quizResultsService.saveQuizResult(quizResult);
-                    }
+//                    На данный момент востребованность данного функционала под вопросом
+//                    if (quizResultsService.checkIfPresents(quizResult)) {
+//                        quizResultsService.updateQuizResult(quizResult);
+//                    } else {
+//                        quizResultsService.saveQuizResult(quizResult);
+//                    }
 
                     message = SendMessage.builder().
                             chatId(chatId).
-                            text("Тест по теме " + spec + " завершен.\n" +
-                                    "Ваш результат: " + test.getEmployeeScore() +
+                            text("Тест по теме " + specialisation + " завершен.\n" +
+                                    "Ваш результат: " + quizResult.getScore() +
                                     "\nВы можете выбрать другую тему или пересдать эту.").
                             build();
 
@@ -238,8 +225,8 @@ public class TestBot extends TelegramLongPollingBot {
     public void sendResultToAdmin(Long adminTelegramId, String employeeName) {
         SendMessage messageToAdmin= SendMessage.builder().
                 chatId(adminTelegramId).
-                text(employeeName + " прошел тест по теме " + spec + ".\n" +
-                        "с результатом: " + test.getEmployeeScore()).
+                text(employeeName + " прошел тест по теме " + specialisation + "\n" +
+                        "с результатом " + quizResult.getScore()).
                 build();
 
         try {

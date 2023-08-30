@@ -24,21 +24,21 @@ public class MenuOfSpecs {
     public static List<KeyboardRow> keyboardRows() {
         List<KeyboardRow> rows = new ArrayList<>();
 
-        rows.add(new KeyboardRow(keyboardButtons(Specs.IMPLANT.getSpec())));
-        rows.add(new KeyboardRow(keyboardButtons(Specs.SURGERY.getSpec())));
-        rows.add(new KeyboardRow(keyboardButtons(Specs.THERAPY.getSpec())));
-        rows.add(new KeyboardRow(keyboardButtons(Specs.HYGIENIC_CLEANING.getSpec())));
-        rows.add(new KeyboardRow(keyboardButtons(Specs.ORTHOPEDIC.getSpec())));
-        rows.add(new KeyboardRow(keyboardButtons(Specs.ORTHODONTIC.getSpec())));
+//        rows.add(new KeyboardRow(keyboardButtons(Specialisations.IMPLANT.getSpecialisation())));
+        rows.add(new KeyboardRow(keyboardButtons(Specialisations.SURGERY.getSpecialisation())));
+        rows.add(new KeyboardRow(keyboardButtons(Specialisations.THERAPY.getSpecialisation())));
+//        rows.add(new KeyboardRow(keyboardButtons(Specialisations.HYGIENIC_CLEANING.getSpecialisation())));
+//        rows.add(new KeyboardRow(keyboardButtons(Specialisations.ORTHOPEDIC.getSpecialisation())));
+//        rows.add(new KeyboardRow(keyboardButtons(Specialisations.ORTHODONTIC.getSpecialisation())));
 
         return rows;
     }
 
 
-    public static List<KeyboardButton> keyboardButtons(String theme) {
+    public static List<KeyboardButton> keyboardButtons(String specialisation) {
         List<KeyboardButton> buttons = new ArrayList<>();
 
-        buttons.add(new KeyboardButton(theme));
+        buttons.add(new KeyboardButton(specialisation));
 
         return buttons;
     }
