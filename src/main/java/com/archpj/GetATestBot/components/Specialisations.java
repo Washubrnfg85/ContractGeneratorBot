@@ -1,12 +1,15 @@
 package com.archpj.GetATestBot.components;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum Specialisations {
-    IMPLANT ("Имплантология"),
-    SURGERY ("Хирургия"),
-    THERAPY ("Терапия"),
-    HYGIENIC_CLEANING ("Гигиеническая чистка"),
-    ORTHOPEDIC ("Ортопедия"),
-    ORTHODONTIC ("Ортодонтия");
+    IMPLANT ("География"),
+    SURGERY ("Физика"),
+    THERAPY ("Астрономия"),
+    HYGIENIC_CLEANING ("Анатомия"),
+    ORTHOPEDIC ("История"),
+    ORTHODONTIC ("Жизнь в Алкоцентавре");
 
     private String specialisation;
 
@@ -18,10 +21,10 @@ public enum Specialisations {
         return specialisation;
     }
 
-    public static String[] toArray() {
-        String[] result = new String[Specialisations.values().length];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = Specialisations.values()[i].getSpecialisation();
+    public static List<String> toList() {
+        List<String> result = new ArrayList<>(Specialisations.values().length);
+        for (int i = 0; i < Specialisations.values().length; i++) {
+            result.add(Specialisations.values()[i].getSpecialisation());
         }
 
         return result;

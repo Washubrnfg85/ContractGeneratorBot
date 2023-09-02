@@ -2,6 +2,7 @@ package com.archpj.GetATestBot;
 
 import com.archpj.GetATestBot.components.Buttons;
 import com.archpj.GetATestBot.components.MenuOfSpecs;
+import com.archpj.GetATestBot.components.Specialisations;
 import com.archpj.GetATestBot.config.BotConfig;
 import com.archpj.GetATestBot.models.QuizResult;
 import com.archpj.GetATestBot.models.Quiz;
@@ -94,13 +95,14 @@ public class TestBot extends TelegramLongPollingBot {
                         chatId(chatId).
                         text(HELP_TEXT).
                         build();
+            } else if (Specialisations.toList().contains(incomingMessage.getText())) {
 
-            } else if (incomingMessage.getText().equals("Имплантология") ||
-                    incomingMessage.getText().equals("Хирургия") ||
-                    incomingMessage.getText().equals("Терапия") ||
-                    incomingMessage.getText().equals("Гигиеническая чистка") ||
-                    incomingMessage.getText().equals("Ортопедия") ||
-                    incomingMessage.getText().equals("Ортодонтия")) {
+//            } else if (incomingMessage.getText().equals("Имплантология") ||
+//                    incomingMessage.getText().equals("Хирургия") ||
+//                    incomingMessage.getText().equals("Терапия") ||
+//                    incomingMessage.getText().equals("Гигиеническая чистка") ||
+//                    incomingMessage.getText().equals("Ортопедия") ||
+//                    incomingMessage.getText().equals("Ортодонтия")) {
 
                 specialisation = incomingMessage.getText();
                 iterationThroughTest = 0;

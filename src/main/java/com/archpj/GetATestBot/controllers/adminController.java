@@ -25,7 +25,7 @@ public class adminController {
 
     @GetMapping("/admin")
     public String admin() {
-        return "index";
+        return "admin";
     }
 
     @GetMapping("admin/add_question")
@@ -33,7 +33,7 @@ public class adminController {
         Quiz quiz = new Quiz();
         model.addAttribute("quiz", quiz);
 
-        List<String> specialisationVariants = Arrays.asList(Specialisations.toArray());
+        List<String> specialisationVariants = Specialisations.toList();
         model.addAttribute("specialisationVariants", specialisationVariants);
 
         List<String> answerVariants = Arrays.asList("A", "B", "C", "D");
