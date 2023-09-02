@@ -15,4 +15,6 @@ public interface QuizRepository extends JpaRepository<Quiz, Integer> {
 
     @Query(value = "select correct_answer from quiz_questions where specialisation = ?1", nativeQuery = true)
     List<String> loadCorrectAnswers(String specialisation);
+
+    boolean existsQuizByQuestion(String questionBody);
 }

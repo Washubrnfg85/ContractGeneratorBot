@@ -1,10 +1,7 @@
 package com.archpj.GetATestBot.models;
 
 import com.archpj.GetATestBot.services.QuizService;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
@@ -13,15 +10,17 @@ import java.util.List;
 @Entity
 @Table(name = "quiz_questions")
 public class Quiz {
+    @Transient
+    private QuizService quizService;
+
+
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int questionId;
     private String specialisation;
     private String question;
     private String correctAnswer;
 
-
-    @Transient
-    private QuizService quizService;
 
     @Transient
     private List<String> questions;
@@ -32,6 +31,7 @@ public class Quiz {
     @Transient
     private String employeeAnswers;
 
+    public Quiz() {}
 
     public Quiz(QuizService quizService, String specialisation) {
         this.quizService = quizService;
@@ -50,4 +50,12 @@ public class Quiz {
         this.employeeAnswers = employeeAnswers;
     }
 
+    @Override
+    public String toString() {
+        return "Quiz{" +
+                "specialisation='" + specialisation + '\'' +
+                ", question='" + question + '\'' +
+                ", correctAnswer='" + correctAnswer + '\'' +
+                '}';
+    }
 }

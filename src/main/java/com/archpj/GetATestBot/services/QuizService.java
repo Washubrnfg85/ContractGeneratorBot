@@ -1,6 +1,7 @@
 package com.archpj.GetATestBot.services;
 
 import com.archpj.GetATestBot.database.QuizRepository;
+import com.archpj.GetATestBot.models.Quiz;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,5 +32,13 @@ public class QuizService {
         }
 
         return result;
+    }
+
+    public void addQuestion(Quiz quiz) {
+        quizRepository.save(quiz);
+    }
+
+    public boolean ifPresents(Quiz quiz) {
+        return quizRepository.existsQuizByQuestion(quiz.getQuestion());
     }
 }
