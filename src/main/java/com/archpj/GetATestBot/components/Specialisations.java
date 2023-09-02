@@ -17,4 +17,13 @@ public enum Specialisations {
     public String getSpecialisation() {
         return specialisation;
     }
+
+    public static String[] toArray() {
+        String[] result = new String[Specialisations.values().length];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = Specialisations.values()[i].getSpecialisation();
+        }
+
+        return result;
+    }
 }

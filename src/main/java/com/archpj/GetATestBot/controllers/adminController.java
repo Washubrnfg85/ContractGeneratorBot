@@ -1,5 +1,6 @@
 package com.archpj.GetATestBot.controllers;
 
+import com.archpj.GetATestBot.components.Specialisations;
 import com.archpj.GetATestBot.models.Quiz;
 import com.archpj.GetATestBot.services.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,32 +23,35 @@ public class adminController {
         this.quizService = quizService;
     }
 
-    @GetMapping("/index")
-    public String index() {
+    @GetMapping("/admin")
+    public String admin() {
         return "index";
     }
 
-    @GetMapping("first/add_question")
+    @GetMapping("admin/add_question")
     public String addQuestion(Model model) {
         Quiz quiz = new Quiz();
         model.addAttribute("quiz", quiz);
 
+        List<String> specialisationVariants = Arrays.asList(Specialisations.toArray());
+        model.addAttribute("specialisationVariants", specialisationVariants);
+
         List<String> answerVariants = Arrays.asList("A", "B", "C", "D");
         model.addAttribute("answerVariants", answerVariants);
 
-        return "first/add_question";
+        return "admin/add_question";
     }
 
-    @PostMapping("first/add_question")
+    @PostMapping("admin/add_question")
     public String submitForm(@ModelAttribute("quiz") Quiz quiz) {
         System.out.println(quiz);
         quizService.addQuestion(quiz);
 
-        return "first/add_question_success";
+        return "admin/add_question_success";
     }
 
-    @GetMapping("first/get_data")
+    @GetMapping("admin/get_data")
     public String getData() {
-        return "first/get_data";
+        return "admin/get_data";
     }
 }
