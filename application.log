@@ -1,0 +1,125 @@
+2023-09-03T20:55:26.979+03:00  INFO 18768 --- [main] c.a.GetATestBot.GetATestBotApplication   : Starting GetATestBotApplication using Java 20.0.1 with PID 18768 (D:\Java_Projects\GetATestBot\target\classes started by Aleksandr Sergeev in D:\Java_Projects\GetATestBot)
+2023-09-03T20:55:26.982+03:00  INFO 18768 --- [main] c.a.GetATestBot.GetATestBotApplication   : No active profile set, falling back to 1 default profile: "default"
+2023-09-03T20:55:29.278+03:00  INFO 18768 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-09-03T20:55:29.278+03:00  INFO 18768 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.11]
+2023-09-03T20:55:29.433+03:00  INFO 18768 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-09-03T20:55:29.655+03:00  INFO 18768 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-09-03T20:55:29.733+03:00  INFO 18768 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.6.Final
+2023-09-03T20:55:29.736+03:00  INFO 18768 --- [main] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-09-03T20:55:29.925+03:00  INFO 18768 --- [main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-09-03T20:55:30.186+03:00  INFO 18768 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-09-03T20:55:30.599+03:00  INFO 18768 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@259287ac
+2023-09-03T20:55:30.605+03:00  INFO 18768 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-09-03T20:55:31.027+03:00  INFO 18768 --- [main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-09-03T20:55:32.006+03:00  INFO 18768 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-09-03T20:55:34.459+03:00  INFO 18768 --- [main] c.a.GetATestBot.GetATestBotApplication   : Started GetATestBotApplication in 8.259 seconds (process running for 9.113)
+2023-09-03T20:55:43.291+03:00  INFO 18768 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-09-03T20:55:43.298+03:00  INFO 18768 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-09-03T20:56:32.345+03:00  INFO 16672 --- [main] c.a.GetATestBot.GetATestBotApplication   : Starting GetATestBotApplication using Java 20.0.1 with PID 16672 (D:\Java_Projects\GetATestBot\target\classes started by Aleksandr Sergeev in D:\Java_Projects\GetATestBot)
+2023-09-03T20:56:32.348+03:00  INFO 16672 --- [main] c.a.GetATestBot.GetATestBotApplication   : No active profile set, falling back to 1 default profile: "default"
+2023-09-03T20:56:34.646+03:00  INFO 16672 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-09-03T20:56:34.646+03:00  INFO 16672 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.11]
+2023-09-03T20:56:34.810+03:00  INFO 16672 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-09-03T20:56:35.075+03:00  INFO 16672 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-09-03T20:56:35.139+03:00  INFO 16672 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.6.Final
+2023-09-03T20:56:35.142+03:00  INFO 16672 --- [main] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-09-03T20:56:35.328+03:00  INFO 16672 --- [main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-09-03T20:56:35.603+03:00  INFO 16672 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-09-03T20:56:35.796+03:00  INFO 16672 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@270d5060
+2023-09-03T20:56:35.798+03:00  INFO 16672 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-09-03T20:56:36.222+03:00  INFO 16672 --- [main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-09-03T20:56:37.151+03:00  INFO 16672 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-09-03T20:56:40.828+03:00  INFO 16672 --- [main] c.a.GetATestBot.GetATestBotApplication   : Started GetATestBotApplication in 9.111 seconds (process running for 9.732)
+2023-09-03T20:56:56.907+03:00  INFO 16672 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-09-03T20:58:10.563+03:00  INFO 16672 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-09-03T20:58:10.577+03:00  INFO 16672 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-09-03T20:58:50.946+03:00  INFO 9916 --- [main] c.a.GetATestBot.GetATestBotApplication   : Starting GetATestBotApplication using Java 20.0.1 with PID 9916 (D:\Java_Projects\GetATestBot\target\classes started by Aleksandr Sergeev in D:\Java_Projects\GetATestBot)
+2023-09-03T20:58:50.949+03:00  INFO 9916 --- [main] c.a.GetATestBot.GetATestBotApplication   : No active profile set, falling back to 1 default profile: "default"
+2023-09-03T20:58:53.313+03:00  INFO 9916 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-09-03T20:58:53.313+03:00  INFO 9916 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.11]
+2023-09-03T20:58:53.479+03:00  INFO 9916 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-09-03T20:58:53.769+03:00  INFO 9916 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-09-03T20:58:53.866+03:00  INFO 9916 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.6.Final
+2023-09-03T20:58:53.870+03:00  INFO 9916 --- [main] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-09-03T20:58:54.047+03:00  INFO 9916 --- [main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-09-03T20:58:54.275+03:00  INFO 9916 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-09-03T20:58:54.480+03:00  INFO 9916 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6d31f106
+2023-09-03T20:58:54.483+03:00  INFO 9916 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-09-03T20:58:54.859+03:00  INFO 9916 --- [main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-09-03T20:58:55.611+03:00  INFO 9916 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-09-03T20:58:57.876+03:00  INFO 9916 --- [main] c.a.GetATestBot.GetATestBotApplication   : Started GetATestBotApplication in 7.582 seconds (process running for 8.211)
+2023-09-03T20:59:05.088+03:00  INFO 9916 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-09-03T21:00:16.505+03:00  INFO 9916 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-09-03T21:00:16.518+03:00  INFO 9916 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-09-03T21:00:25.056+03:00  INFO 2248 --- [main] c.a.GetATestBot.GetATestBotApplication   : Starting GetATestBotApplication using Java 20.0.1 with PID 2248 (D:\Java_Projects\GetATestBot\target\classes started by Aleksandr Sergeev in D:\Java_Projects\GetATestBot)
+2023-09-03T21:00:25.058+03:00  INFO 2248 --- [main] c.a.GetATestBot.GetATestBotApplication   : No active profile set, falling back to 1 default profile: "default"
+2023-09-03T21:00:27.450+03:00  INFO 2248 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-09-03T21:00:27.451+03:00  INFO 2248 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.11]
+2023-09-03T21:00:27.593+03:00  INFO 2248 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-09-03T21:00:27.851+03:00  INFO 2248 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-09-03T21:00:27.923+03:00  INFO 2248 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.6.Final
+2023-09-03T21:00:27.926+03:00  INFO 2248 --- [main] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-09-03T21:00:28.109+03:00  INFO 2248 --- [main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-09-03T21:00:28.382+03:00  INFO 2248 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-09-03T21:00:28.654+03:00  INFO 2248 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3a209918
+2023-09-03T21:00:28.655+03:00  INFO 2248 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-09-03T21:00:29.118+03:00  INFO 2248 --- [main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-09-03T21:00:29.876+03:00  INFO 2248 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-09-03T21:00:33.311+03:00  INFO 2248 --- [main] c.a.GetATestBot.GetATestBotApplication   : Started GetATestBotApplication in 8.96 seconds (process running for 9.854)
+2023-09-03T21:00:33.620+03:00  INFO 2248 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-09-03T21:03:27.673+03:00  INFO 2248 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-09-03T21:03:27.697+03:00  INFO 2248 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-09-03T21:07:33.423+03:00  INFO 14648 --- [main] c.a.GetATestBot.GetATestBotApplication   : Starting GetATestBotApplication using Java 20.0.1 with PID 14648 (D:\Java_Projects\GetATestBot\target\classes started by Aleksandr Sergeev in D:\Java_Projects\GetATestBot)
+2023-09-03T21:07:33.425+03:00  INFO 14648 --- [main] c.a.GetATestBot.GetATestBotApplication   : No active profile set, falling back to 1 default profile: "default"
+2023-09-03T21:07:35.473+03:00  INFO 14648 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-09-03T21:07:35.473+03:00  INFO 14648 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.11]
+2023-09-03T21:07:35.608+03:00  INFO 14648 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-09-03T21:07:35.856+03:00  INFO 14648 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-09-03T21:07:35.910+03:00  INFO 14648 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.6.Final
+2023-09-03T21:07:35.913+03:00  INFO 14648 --- [main] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-09-03T21:07:36.051+03:00  INFO 14648 --- [main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-09-03T21:07:36.367+03:00  INFO 14648 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-09-03T21:07:36.613+03:00  INFO 14648 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5980fa73
+2023-09-03T21:07:36.615+03:00  INFO 14648 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-09-03T21:07:36.968+03:00  INFO 14648 --- [main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-09-03T21:07:37.641+03:00  INFO 14648 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-09-03T21:07:40.020+03:00  INFO 14648 --- [main] c.a.GetATestBot.GetATestBotApplication   : Started GetATestBotApplication in 7.209 seconds (process running for 7.763)
+2023-09-03T21:07:50.013+03:00  INFO 14648 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-09-03T21:08:17.765+03:00  INFO 14648 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-09-03T21:08:17.773+03:00  INFO 14648 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-09-03T21:08:24.027+03:00  INFO 4792 --- [main] c.a.GetATestBot.GetATestBotApplication   : Starting GetATestBotApplication using Java 20.0.1 with PID 4792 (D:\Java_Projects\GetATestBot\target\classes started by Aleksandr Sergeev in D:\Java_Projects\GetATestBot)
+2023-09-03T21:08:24.030+03:00  INFO 4792 --- [main] c.a.GetATestBot.GetATestBotApplication   : No active profile set, falling back to 1 default profile: "default"
+2023-09-03T21:08:26.727+03:00  INFO 4792 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-09-03T21:08:26.727+03:00  INFO 4792 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.11]
+2023-09-03T21:08:26.876+03:00  INFO 4792 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-09-03T21:08:27.106+03:00  INFO 4792 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-09-03T21:08:27.172+03:00  INFO 4792 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.6.Final
+2023-09-03T21:08:27.175+03:00  INFO 4792 --- [main] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-09-03T21:08:27.372+03:00  INFO 4792 --- [main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-09-03T21:08:27.908+03:00  INFO 4792 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-09-03T21:08:28.442+03:00  INFO 4792 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@beabd6b
+2023-09-03T21:08:28.444+03:00  INFO 4792 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-09-03T21:08:29.520+03:00  INFO 4792 --- [main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-09-03T21:08:30.834+03:00  INFO 4792 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-09-03T21:08:33.476+03:00  INFO 4792 --- [main] c.a.GetATestBot.GetATestBotApplication   : Started GetATestBotApplication in 10.066 seconds (process running for 10.683)
+2023-09-03T21:08:38.609+03:00  INFO 4792 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-09-03T21:11:23.037+03:00  INFO 4792 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-09-03T21:11:23.048+03:00  INFO 4792 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-09-03T21:11:30.354+03:00  INFO 11560 --- [main] c.a.GetATestBot.GetATestBotApplication   : Starting GetATestBotApplication using Java 20.0.1 with PID 11560 (D:\Java_Projects\GetATestBot\target\classes started by Aleksandr Sergeev in D:\Java_Projects\GetATestBot)
+2023-09-03T21:11:30.357+03:00  INFO 11560 --- [main] c.a.GetATestBot.GetATestBotApplication   : No active profile set, falling back to 1 default profile: "default"
+2023-09-03T21:11:32.760+03:00  INFO 11560 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-09-03T21:11:32.760+03:00  INFO 11560 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.11]
+2023-09-03T21:11:32.928+03:00  INFO 11560 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-09-03T21:11:33.206+03:00  INFO 11560 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-09-03T21:11:33.291+03:00  INFO 11560 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.6.Final
+2023-09-03T21:11:33.294+03:00  INFO 11560 --- [main] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2023-09-03T21:11:33.510+03:00  INFO 11560 --- [main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-09-03T21:11:33.768+03:00  INFO 11560 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-09-03T21:11:34.006+03:00  INFO 11560 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@532dacf5
+2023-09-03T21:11:34.008+03:00  INFO 11560 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-09-03T21:11:34.390+03:00  INFO 11560 --- [main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider name : bytebuddy
+2023-09-03T21:11:35.432+03:00  INFO 11560 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-09-03T21:11:39.374+03:00  INFO 11560 --- [main] c.a.GetATestBot.GetATestBotApplication   : Started GetATestBotApplication in 9.937 seconds (process running for 10.704)
+2023-09-03T21:11:39.833+03:00  INFO 11560 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-09-03T21:12:29.598+03:00  INFO 11560 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-09-03T21:12:29.607+03:00  INFO 11560 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
