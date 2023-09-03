@@ -9,7 +9,8 @@ public enum Specialisations {
     THERAPY ("Астрономия"),
     HYGIENIC_CLEANING ("Анатомия"),
     ORTHOPEDIC ("История"),
-    ORTHODONTIC ("Жизнь в Алкоцентавре");
+//    ORTHODONTIC ("Жизнь в Алкоцентавре")
+    ;
 
     private String specialisation;
 

@@ -44,7 +44,6 @@ public class adminController {
 
     @PostMapping("admin/add_question")
     public String submitForm(@ModelAttribute("quiz") Quiz quiz) {
-        System.out.println(quiz);
         quizService.addQuestion(quiz);
 
         return "admin/add_question_success";
