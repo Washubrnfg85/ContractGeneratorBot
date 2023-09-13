@@ -24,17 +24,9 @@ public class MenuOfSpecs {
     public static List<KeyboardRow> keyboardRows() {
         List<KeyboardRow> rows = new ArrayList<>();
 
-        for(String spec : Specialisations.toList()) {
+        for(String spec : CommonSpecialisations.toList()) {
             rows.add(new KeyboardRow(keyboardButtons(spec)));
         }
-
-//        rows.add(new KeyboardRow(keyboardButtons(Specialisations.IMPLANT.getSpecialisation())));
-//        rows.add(new KeyboardRow(keyboardButtons(Specialisations.SURGERY.getSpecialisation())));
-//        rows.add(new KeyboardRow(keyboardButtons(Specialisations.THERAPY.getSpecialisation())));
-//        rows.add(new KeyboardRow(keyboardButtons(Specialisations.HYGIENIC_CLEANING.getSpecialisation())));
-//        rows.add(new KeyboardRow(keyboardButtons(Specialisations.ORTHOPEDIC.getSpecialisation())));
-//        rows.add(new KeyboardRow(keyboardButtons(Specialisations.ORTHODONTIC.getSpecialisation())));
-
         return rows;
     }
 

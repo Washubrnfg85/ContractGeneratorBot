@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Repository
 public interface QuizResultsRepository extends JpaRepository<QuizResult, Long> {
@@ -17,4 +18,6 @@ public interface QuizResultsRepository extends JpaRepository<QuizResult, Long> {
 
     @Query(value = "SELECT EXISTS (SELECT * FROM quiz_results WHERE telegram_id = ?1 and specialisation = ?2);", nativeQuery = true)
     boolean checkIfPresents(Long telegramId, String specialisation);
+
+//    List<QuizResult> get
 }

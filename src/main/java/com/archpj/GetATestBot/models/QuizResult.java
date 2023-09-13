@@ -65,27 +65,4 @@ public class QuizResult {
             }
         }
     }
-
-//    Method hasn't been tested yet.
-//
-//    public String getDetailedResult() {
-//
-//        String[] correctAndEmployeeResults = this.results.split("\n");
-//        String correctAnswer = correctAndEmployeeResults[0];
-//        String employeeAnswers = correctAndEmployeeResults[1];
-//
-//        List<String> derailedResults = new ArrayList<>(correctAnswer.length());
-//
-//        String[] correctLetters = correctAnswer.split("");
-//        String[] employeeLetters = employeeAnswers.split("");
-//
-//        for (int i = 0; i < derailedResults.size(); i++) {
-//            derailedResults.add(i, questions.get(i) +
-//                    "\nВерный ответ: " + correctLetters[i] +
-//                    "\nДан ответ: " + employeeLetters[i]);
-//        }
-//
-//
-//        return derailedResults.toString();
-//    }
 }

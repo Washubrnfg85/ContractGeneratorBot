@@ -33,11 +33,11 @@ public class Quiz {
 
     public Quiz() {}
 
-    public Quiz(QuizService quizService, String specialisation) {
+    public Quiz(QuizService quizService, String specialisation) { //переписать конструктор
         this.quizService = quizService;
         this.specialisation = specialisation;
 
-        questions = quizService.loadQuizQuestions(specialisation);
+        questions = quizService.loadQuizQuestions(specialisation);   //так лучше не делать
         correctAnswer = quizService.loadCorrectAnswers(specialisation);
         this.employeeAnswers = "";
     }
