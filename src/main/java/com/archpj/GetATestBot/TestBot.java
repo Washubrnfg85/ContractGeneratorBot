@@ -43,22 +43,22 @@ public class TestBot extends TelegramLongPollingBot {
 
 
     public void onUpdateReceived(Update update) {
-        System.out.println("Method works");
 
+        Session sessionToUpdate;
+        SendMessage sendMessage;
         long employeeId = update.getMessage().getFrom().getId();
         String employeeName = update.getMessage().getFrom().getLastName() != null ?
                 update.getMessage().getFrom().getFirstName() + " " + update.getMessage().getFrom().getLastName() :
                 update.getMessage().getFrom().getFirstName();
 
-        SendMessage sendMessage;
-
         if (sessions.isEmpty() || !employeeHasSession(employeeId)) {
             System.out.println("Creating new Session");
-            Session session = new Session(employeeId, employeeName, update);
-            sendMessage = session.setUpdate(update);
+            sessionToUpdate = new Session(employeeId, employeeName, update);
         } else {
-            sendMessage = passUpdateToSession(employeeId, update);
+             sessionToUpdate = passUpdateToSession(employeeId, update);
         }
+
+        sendMessage = sessionToUpdate.handleUpdate();
 
         try {
             execute(sendMessage);
@@ -77,12 +77,12 @@ public class TestBot extends TelegramLongPollingBot {
         return false;
     }
 
-    public SendMessage passUpdateToSession(long employeeId, Update update) {
-        return sessions.stream().
-                filter(session -> employeeId == session.getEmployeeId()).
-                findAny().
-                get().
-                setUpdate(update);
+    public Session passUpdateToSession(long employeeId, Update update) {
+        Session session = sessions.stream().
+                filter(s -> employeeId == s.getEmployeeId()).
+                findAny().get();
+        session.setUpdate(update);
+        return session;
     }
 }
 

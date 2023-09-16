@@ -4,8 +4,9 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 
-@Configuration  //прочитать про аннотацию и другие способы конфигурации. И вообще зачем она нужна. С примерами.
+@Component  //прочитать про аннотацию и другие способы конфигурации. И вообще зачем она нужна. С примерами.
 @Data
 @PropertySource("application.properties")
 public class BotConfig {
