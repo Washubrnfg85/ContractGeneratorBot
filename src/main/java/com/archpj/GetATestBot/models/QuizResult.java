@@ -18,7 +18,7 @@ public class QuizResult {
 
     private String employeeName;
 
-    private String specialisation;
+    private String topic;
 
     private String results;
 
@@ -30,17 +30,17 @@ public class QuizResult {
 
     public QuizResult() {}
 
-    public QuizResult(long telegramId, String employeeName, String specialisation, String results, Timestamp timestamp) {
+    public QuizResult(long telegramId, String employeeName, String topic, String results, Timestamp timestamp) {
         this.telegramId = telegramId;
         this.employeeName = employeeName;
-        this.specialisation = specialisation;
+        this.topic = topic;
         this.results = results;
         this.timestamp = timestamp;
     }
 
 
-    public String getSpecialisation() {
-        return specialisation;
+    public String gettopic() {
+        return topic;
     }
 
     public void calculateEmployeeScore() {

@@ -3,7 +3,7 @@ package com.archpj.GetATestBot.components;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum MedicalSpecialisations {
+public enum MedicalTopics {
     IMPLANT ("Имплантология"),
     SURGERY ("Хирургия"),
     THERAPY ("Терапия"),
@@ -13,20 +13,20 @@ public enum MedicalSpecialisations {
     PRICE ("Прайс-лист")
     ;
 
-    private final String specialisation;
+    private final String topic;
 
-    MedicalSpecialisations(String specialisation) {
-        this.specialisation = specialisation;
+    MedicalTopics(String topic) {
+        this.topic = topic;
     }
 
-    public String getSpecialisation() {
-        return specialisation;
+    public String gettopic() {
+        return topic;
     }
 
     public List<String> toList() {
-        List<String> result = new ArrayList<>(CommonSpecialisations.values().length);
-        for (int i = 0; i < CommonSpecialisations.values().length; i++) {
-            result.add(CommonSpecialisations.values()[i].getSpecialisation());
+        List<String> result = new ArrayList<>(CommonTopics.values().length);
+        for (int i = 0; i < CommonTopics.values().length; i++) {
+            result.add(CommonTopics.values()[i].gettopic());
         }
 
         return result;

@@ -7,9 +7,9 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuOfSpecs {
+public class MenuOfTopics {
 
-    public static ReplyKeyboardMarkup sendMenu() {
+    public static ReplyKeyboardMarkup generateMenu() {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
 
         replyKeyboardMarkup.setSelective(true);
@@ -24,17 +24,17 @@ public class MenuOfSpecs {
     public static List<KeyboardRow> keyboardRows() {
         List<KeyboardRow> rows = new ArrayList<>();
 
-        for(String spec : CommonSpecialisations.toList()) {
+        for(String spec : CommonTopics.toList()) {
             rows.add(new KeyboardRow(keyboardButtons(spec)));
         }
         return rows;
     }
 
 
-    public static List<KeyboardButton> keyboardButtons(String specialisation) {
+    public static List<KeyboardButton> keyboardButtons(String topic) {
         List<KeyboardButton> buttons = new ArrayList<>();
 
-        buttons.add(new KeyboardButton(specialisation));
+        buttons.add(new KeyboardButton(topic));
 
         return buttons;
     }

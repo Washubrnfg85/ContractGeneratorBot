@@ -16,13 +16,12 @@ public class Session {
     private final String employeeName;
     private List<String> questions;
     private String correctAnswers;
-    private String employeeAnswers;
+    private String employeeAnswers = "";
 
     private boolean testInProgress = false;
     private SendMessage message;
 
     public Session(long employeeId, String employeeName, Update update) {
-
         this.employeeId = employeeId;
         this.employeeName = employeeName;
         this.update = update;

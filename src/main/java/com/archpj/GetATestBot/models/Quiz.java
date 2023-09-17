@@ -17,7 +17,7 @@ public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int questionId;
-    private String specialisation;
+    private String topic;
     private String question;
     private String correctAnswer;
 
@@ -33,12 +33,12 @@ public class Quiz {
 
     public Quiz() {}
 
-    public Quiz(QuizService quizService, String specialisation) { //переписать конструктор
+    public Quiz(QuizService quizService, String topic) { //переписать конструктор
         this.quizService = quizService;
-        this.specialisation = specialisation;
+        this.topic = topic;
 
-        questions = quizService.loadQuizQuestions(specialisation);   //так лучше не делать
-        correctAnswer = quizService.loadCorrectAnswers(specialisation);
+        questions = quizService.loadQuizQuestions(topic);   //так лучше не делать
+        correctAnswer = quizService.loadCorrectAnswers(topic);
         this.employeeAnswers = "";
     }
 
@@ -53,7 +53,7 @@ public class Quiz {
     @Override
     public String toString() {
         return "Quiz{" +
-                "specialisation='" + specialisation + '\'' +
+                "topic='" + topic + '\'' +
                 ", question='" + question + '\'' +
                 ", correctAnswer='" + correctAnswer + '\'' +
                 '}';

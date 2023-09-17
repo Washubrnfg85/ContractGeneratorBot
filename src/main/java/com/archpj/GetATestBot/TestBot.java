@@ -1,8 +1,11 @@
 package com.archpj.GetATestBot;
 
 import com.archpj.GetATestBot.config.BotConfig;
+import com.archpj.GetATestBot.database.QuizRepository;
 import com.archpj.GetATestBot.models.Session;
+import com.archpj.GetATestBot.services.SessionService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.commands.SetMyCommands;
@@ -11,8 +14,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.commands.scope.BotCommandScopeDefault;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.archpj.GetATestBot.components.BotCommands.COMMANDS;
 
@@ -21,11 +24,17 @@ import static com.archpj.GetATestBot.components.BotCommands.COMMANDS;
 public class TestBot extends TelegramLongPollingBot {
 
     private final BotConfig botConfig;
-    private List<Session> sessions;
 
-    public TestBot(BotConfig botConfig) {  // свериться с документацие (нужен ли при этом botConfig и @Configuration
+    @Autowired
+    private SessionService sessionService;
+    @Autowired
+    private QuizRepository quizRepository;
+
+    private Map<Long, Session> sessions;
+
+    public TestBot(BotConfig botConfig) {
         this.botConfig = botConfig;
-        this.sessions = new ArrayList<>();
+        this.sessions = new HashMap<>();
         try {
             this.execute(new SetMyCommands(COMMANDS, new BotCommandScopeDefault(), null));
         } catch (TelegramApiException e) {
@@ -37,6 +46,7 @@ public class TestBot extends TelegramLongPollingBot {
         return botConfig.getName();
     }
 
+    @Override
     public String getBotToken() {
         return botConfig.getToken();
     }  // depricated????
@@ -51,8 +61,7 @@ public class TestBot extends TelegramLongPollingBot {
                 update.getMessage().getFrom().getFirstName() + " " + update.getMessage().getFrom().getLastName() :
                 update.getMessage().getFrom().getFirstName();
 
-        if (sessions.isEmpty() || !employeeHasSession(employeeId)) {
-            System.out.println("Creating new Session");
+        if (!sessions.containsKey(employeeId)) {
             sessionToUpdate = new Session(employeeId, employeeName, update);
         } else {
              sessionToUpdate = passUpdateToSession(employeeId, update);
@@ -68,19 +77,8 @@ public class TestBot extends TelegramLongPollingBot {
 
     }
 
-    public boolean employeeHasSession(long employeeId) {
-        for (Session session : sessions) {
-            if (session.getEmployeeId() == employeeId) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public Session passUpdateToSession(long employeeId, Update update) {
-        Session session = sessions.stream().
-                filter(s -> employeeId == s.getEmployeeId()).
-                findAny().get();
+        Session session = sessions.get(employeeId);
         session.setUpdate(update);
         return session;
     }
@@ -96,7 +94,7 @@ public class TestBot extends TelegramLongPollingBot {
 //    public void sendResultToAdmin(Long adminTelegramId, String employeeName) {
 //        SendMessage messageToAdmin= SendMessage.builder().
 //                chatId(adminTelegramId).
-//                text(employeeName + " прошел тест по теме " + specialisation + "\n" +
+//                text(employeeName + " прошел тест по теме " + topic + "\n" +
 //                        "с результатом " + quizResult.getScore()).
 //                build();
 //

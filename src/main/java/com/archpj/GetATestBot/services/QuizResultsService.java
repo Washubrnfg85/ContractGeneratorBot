@@ -1,7 +1,6 @@
 package com.archpj.GetATestBot.services;
 
 import com.archpj.GetATestBot.database.QuizResultsRepository;
-import com.archpj.GetATestBot.models.Quiz;
 import com.archpj.GetATestBot.models.QuizResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,17 +30,17 @@ public class QuizResultsService {
         Long telegramId = quizResult.getTelegramId();
         String employeeName = quizResult.getEmployeeName();
         String results = quizResult.getResults();
-        String specialisation = quizResult.getSpecialisation();
+        String topic = quizResult.gettopic();
         Timestamp timestamp = quizResult.getTimestamp();
 
-        quizResultsRepository.updateSpecResult(telegramId, employeeName, results, specialisation, timestamp);
+        quizResultsRepository.updateSpecResult(telegramId, employeeName, results, topic, timestamp);
     }
 
     public boolean checkIfPresents(QuizResult quizResult) {
         Long telegramId = quizResult.getTelegramId();
-        String specialisation = quizResult.getSpecialisation();
+        String topic = quizResult.gettopic();
 
-        return quizResultsRepository.checkIfPresents(telegramId, specialisation);
+        return quizResultsRepository.checkIfPresents(telegramId, topic);
     }
 
 //    Method hasn't been tested yet.

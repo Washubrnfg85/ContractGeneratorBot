@@ -7,7 +7,7 @@ import java.util.List;
 public interface BotCommands {
     List<BotCommand> COMMANDS = List.of(
             new BotCommand("/start", "Начать все сначала"),
-            new BotCommand("/test", "Начать тестирование"),
+            new BotCommand("/test", "Начать тестирование"),  //а нужна ли эта команда?
             new BotCommand("/help", "Помощь")
     );
 

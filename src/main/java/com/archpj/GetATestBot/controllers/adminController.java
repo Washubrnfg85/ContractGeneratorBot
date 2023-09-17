@@ -1,6 +1,6 @@
 package com.archpj.GetATestBot.controllers;
 
-import com.archpj.GetATestBot.components.CommonSpecialisations;
+import com.archpj.GetATestBot.components.CommonTopics;
 import com.archpj.GetATestBot.models.Quiz;
 import com.archpj.GetATestBot.services.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +38,8 @@ public class adminController {
         Quiz quiz = new Quiz();
         model.addAttribute("quiz", quiz);
 
-        List<String> specialisationVariants = CommonSpecialisations.toList();
-        model.addAttribute("specialisationVariants", specialisationVariants);
+        List<String> topicVariants = CommonTopics.toList();
+        model.addAttribute("topicVariants", topicVariants);
 
         List<String> answerVariants = Arrays.asList("A", "B", "C", "D");
         model.addAttribute("answerVariants", answerVariants);
