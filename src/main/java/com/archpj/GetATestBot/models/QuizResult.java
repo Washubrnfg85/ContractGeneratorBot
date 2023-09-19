@@ -14,7 +14,7 @@ public class QuizResult {
     @GeneratedValue
     private int id;
 
-    private long telegramId;
+    private long employeeId;
 
     private String employeeName;
 
@@ -30,39 +30,11 @@ public class QuizResult {
 
     public QuizResult() {}
 
-    public QuizResult(long telegramId, String employeeName, String topic, String results, Timestamp timestamp) {
-        this.telegramId = telegramId;
+    public QuizResult(long employeeId, String employeeName, String topic, String results, Timestamp timestamp) {
+        this.employeeId = employeeId;
         this.employeeName = employeeName;
         this.topic = topic;
         this.results = results;
         this.timestamp = timestamp;
-    }
-
-
-    public String gettopic() {
-        return topic;
-    }
-
-    public void calculateEmployeeScore() {
-        String[] correctAndEmployeeResults = this.results.split("\n");
-        String correctAnswer = correctAndEmployeeResults[0];
-        String employeeAnswers = correctAndEmployeeResults[1];
-
-        if (correctAnswer.equals(employeeAnswers)) {
-            score = employeeAnswers.length() + "/" + correctAnswer.length();
-        } else {
-            String[] correctLetters = correctAnswer.split("");
-            String[] employeeLetters = employeeAnswers.split("");
-
-            if (correctLetters.length == employeeLetters.length) {
-                int numberOfScores = 0;
-                for (int i = 0; i < correctLetters.length; i++) {
-                    if (correctLetters[i].equals(employeeLetters[i])) numberOfScores++;
-                }
-                score = numberOfScores + "/" + correctAnswer.length();
-            } else {
-                score = "Неизвестная ошибка. Необходимо пересдать тест и сообщить разработчику";
-            }
-        }
     }
 }

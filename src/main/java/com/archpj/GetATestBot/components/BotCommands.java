@@ -7,7 +7,6 @@ import java.util.List;
 public interface BotCommands {
     List<BotCommand> COMMANDS = List.of(
             new BotCommand("/start", "Начать все сначала"),
-            new BotCommand("/test", "Начать тестирование"),  //а нужна ли эта команда?
             new BotCommand("/help", "Помощь")
     );
 
@@ -15,7 +14,6 @@ public interface BotCommands {
             Описание функционала и комманд:
 
             /help - доступные комманды и пояснения
-            /test - выбрать тему и начать тест
             /start - перезапустить все сначала
 
             Каждая тема содержит 5 вопросов.

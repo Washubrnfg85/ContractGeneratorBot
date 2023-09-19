@@ -13,19 +13,18 @@ import java.util.List;
 @Setter
 public class SessionService {
 
-    private final QuizRepository quizRepository;
-    private String topic;
+    private static QuizRepository quizRepository;
 
-    @Autowired
-    public SessionService(QuizRepository quizRepository) {
-        this.quizRepository = quizRepository;
-    }
+//    @Autowired
+//    public SessionService(QuizRepository quizRepository) {
+//        this.quizRepository = quizRepository;
+//    }
 
-    public List<String> loadQuizQuestions() {
+    public static List<String> loadQuizQuestions(String topic) {
         return quizRepository.loadQuizQuestions(topic);
     }
 
-    public String loadCorrectAnswers() {
+    public static String loadCorrectAnswers(String topic) {
         List<String> correctAnswers = quizRepository.loadCorrectAnswers(topic);
         String result = "";
 

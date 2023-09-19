@@ -7,40 +7,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @Transactional
 public class QuizResultsService {
 
-    private QuizResultsRepository quizResultsRepository;
+    private static QuizResultsRepository quizResultsRepository;
 
 
-    @Autowired
-    public QuizResultsService(QuizResultsRepository quizResultsRepository) {
-        this.quizResultsRepository = quizResultsRepository;
-    }
+//    @Autowired
+//    public QuizResultsService(QuizResultsRepository quizResultsRepository) {
+//        this.quizResultsRepository = quizResultsRepository;
+//    }
 
-    public void saveQuizResult(QuizResult quizResult) {
+    public static void saveQuizResult(QuizResult quizResult) {
         quizResultsRepository.save(quizResult);
-    }
-
-    public void updateQuizResult(QuizResult quizResult) {
-        Long telegramId = quizResult.getTelegramId();
-        String employeeName = quizResult.getEmployeeName();
-        String results = quizResult.getResults();
-        String topic = quizResult.gettopic();
-        Timestamp timestamp = quizResult.getTimestamp();
-
-        quizResultsRepository.updateSpecResult(telegramId, employeeName, results, topic, timestamp);
-    }
-
-    public boolean checkIfPresents(QuizResult quizResult) {
-        Long telegramId = quizResult.getTelegramId();
-        String topic = quizResult.gettopic();
-
-        return quizResultsRepository.checkIfPresents(telegramId, topic);
     }
 
 //    Method hasn't been tested yet.

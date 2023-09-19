@@ -32,30 +32,4 @@ public class Quiz {
     private String employeeAnswers;
 
     public Quiz() {}
-
-    public Quiz(QuizService quizService, String topic) { //переписать конструктор
-        this.quizService = quizService;
-        this.topic = topic;
-
-        questions = quizService.loadQuizQuestions(topic);   //так лучше не делать
-        correctAnswer = quizService.loadCorrectAnswers(topic);
-        this.employeeAnswers = "";
-    }
-
-    public List<String> getQuestions() {
-        return questions;
-    }
-
-    public void setEmployeeAnswers(String employeeAnswers) {
-        this.employeeAnswers = employeeAnswers;
-    }
-
-    @Override
-    public String toString() {
-        return "Quiz{" +
-                "topic='" + topic + '\'' +
-                ", question='" + question + '\'' +
-                ", correctAnswer='" + correctAnswer + '\'' +
-                '}';
-    }
 }

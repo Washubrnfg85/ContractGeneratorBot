@@ -24,8 +24,8 @@ public class MenuOfTopics {
     public static List<KeyboardRow> keyboardRows() {
         List<KeyboardRow> rows = new ArrayList<>();
 
-        for(String spec : CommonTopics.toList()) {
-            rows.add(new KeyboardRow(keyboardButtons(spec)));
+        for(String topic : CommonTopics.toList()) {
+            rows.add(new KeyboardRow(keyboardButtons(topic)));
         }
         return rows;
     }

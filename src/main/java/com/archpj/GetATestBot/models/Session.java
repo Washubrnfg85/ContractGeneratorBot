@@ -1,30 +1,111 @@
 package com.archpj.GetATestBot.models;
 
 import com.archpj.GetATestBot.components.Buttons;
+import com.archpj.GetATestBot.services.QuizResultsService;
+import com.archpj.GetATestBot.services.SessionService;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class Session {
 
-    private Update update;
-
     private final long employeeId;
     private final String employeeName;
+    private final String topic;
+
     private List<String> questions;
     private String correctAnswers;
     private String employeeAnswers = "";
+    private int iterationsThroughTest;
 
+    private Update update;
     private boolean testInProgress = false;
-    private SendMessage message;
+    private Timestamp timestamp;
 
-    public Session(long employeeId, String employeeName, Update update) {
+
+    public Session(long employeeId, String employeeName, String topic) {
         this.employeeId = employeeId;
         this.employeeName = employeeName;
+        this.topic = topic;
+        loadQuestions();
+        this.testInProgress = true;
+        this.iterationsThroughTest = 0;
+    }
+
+    public void loadQuestions() {
+        questions = SessionService.loadQuizQuestions(topic);
+        correctAnswers = SessionService.loadCorrectAnswers(topic);
+    }
+
+    public SendMessage sendNextQuestion() {
+        if (iterationsThroughTest < questions.size()) {
+            SendMessage message = SendMessage.builder().
+                    chatId(employeeId).
+                    text(questions.get(iterationsThroughTest)).
+                    replyMarkup(Buttons.suggestAnswers()).
+                    build();
+            iterationsThroughTest++;
+            return message;
+        }
+        return completeQuiz();
+    }
+
+    public SendMessage completeQuiz() {
+        resetIterationsThroughTest();
+        setTimestamp(new Timestamp(System.currentTimeMillis()));
+        QuizResultsService.saveQuizResult(new QuizResult(employeeId, employeeName, topic,
+                correctAnswers + " " + employeeAnswers, timestamp));
+        return SendMessage.builder().
+                chatId(employeeId).
+                text("Тест по теме " + topic + " завершен.\n" +
+                        "Ваш результат: " + calculateScore() +
+                        "\nВы можете выбрать другую тему или пересдать эту.").
+                build();
+    }
+
+    public String calculateScore() {
+        String score = "";
+
+        if (correctAnswers.equals(employeeAnswers)) {
+            score = employeeAnswers.length() + "/" + correctAnswers.length();
+        } else {
+            String[] correctLetters = correctAnswers.split("");
+            String[] employeeLetters = employeeAnswers.split("");
+
+            if (correctLetters.length == employeeLetters.length) {
+                int numberOfScores = 0;
+                for (int i = 0; i < correctLetters.length; i++) {
+                    if (correctLetters[i].equals(employeeLetters[i])) numberOfScores++;
+                }
+                score = numberOfScores + "/" + correctAnswers.length();
+            } else {
+                score = "Неизвестная ошибка. Необходимо пересдать тест и сообщить разработчику";
+                //Logging
+            }
+        }
+        return score;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void resetIterationsThroughTest() {
+        this.iterationsThroughTest = 0;
+    }
+
+    public Update getUpdate() {
+        return update;
+    }
+
+    public void setUpdate(Update update) {
         this.update = update;
+    }
+
+    public boolean isTestInProgress() {
+        return testInProgress;
     }
 
     public long getEmployeeId() {
@@ -33,6 +114,10 @@ public class Session {
 
     public String getEmployeeName() {
         return employeeName;
+    }
+
+    public String getTopic() {
+        return topic;
     }
 
     public List<String> getQuestions() {
@@ -47,73 +132,7 @@ public class Session {
         return employeeAnswers;
     }
 
-    public void setUpdate(Update update) {
-
-        this.update = update;
+    public int getIterationsThroughTest() {
+        return iterationsThroughTest;
     }
-
-    public SendMessage handleUpdate() {
-
-        if (update.hasMessage()) return handleMessage();
-        if (update.hasCallbackQuery()) return handleCallbackQuery();
-
-        return SendMessage.builder().
-                chatId(update.getMyChatMember().getChat().getId()).
-                text("""
-                        Обработка такого типа сообщений не предусмотрена функционалом.
-                        Воспользуйтесь меню выбора команд.""").
-                replyMarkup(Buttons.suggestTest()).
-                build();
-    }
-
-    private SendMessage handleMessage() {
-        Message incomingMessage = update.getMessage();
-        long chatId = update.getMessage().getChatId();
-        SendMessage message;
-
-        if (testInProgress) {
-            message = SendMessage.builder().
-                    chatId(chatId).
-                    text("""
-                            Вы в процессе тестирования.
-                            Ответы принимаются только нажатием на одну из кнопок выбора ответа.
-                            Если Вы хотите прервать тест, то нажмите кнопку \"Отказаться\".
-                            Имейте в этом случае результаты не сохранятся и тест нужно будет пройти заново.""").
-                    replyMarkup(Buttons.rejectTest()).
-                    build();
-        } else {
-            message = SendMessage.builder().
-                    chatId(chatId).
-                    text("""
-                            Вы в процессе тестирования.
-                            Ответы принимаются только нажатием на одну из кнопок выбора ответа.
-                            Если Вы хотите прервать тест, то нажмите кнопку \"Отказаться\".
-                            Имейте в этом случае результаты не сохранятся и тест нужно будет пройти заново.""").
-                    replyMarkup(Buttons.rejectTest()).
-                    build();
-        }
-
-
-        return message;
-
-    }
-
-    private SendMessage handleCallbackQuery() {
-
-        CallbackQuery callbackQuery = update.getCallbackQuery();
-
-        long employeeTelegramId = callbackQuery.getFrom().getId();
-        long chatId = callbackQuery.getMessage().getChatId();
-
-        SendMessage message;
-
-        message = SendMessage.builder().
-                chatId(chatId).
-                text("Ок.\nВы можете начать тест позднее выбрав пункт меню \"/test\"").
-                build();
-
-        return message;
-    }
-
-    
 }

@@ -4,6 +4,7 @@ import com.archpj.GetATestBot.config.BotConfig;
 import com.archpj.GetATestBot.database.QuizRepository;
 import com.archpj.GetATestBot.models.Session;
 import com.archpj.GetATestBot.services.SessionService;
+import com.archpj.GetATestBot.utils.UpdateHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,7 +31,7 @@ public class TestBot extends TelegramLongPollingBot {
     @Autowired
     private QuizRepository quizRepository;
 
-    private Map<Long, Session> sessions;
+    public static Map<Long, Session> sessions;
 
     public TestBot(BotConfig botConfig) {
         this.botConfig = botConfig;
@@ -61,13 +62,19 @@ public class TestBot extends TelegramLongPollingBot {
                 update.getMessage().getFrom().getFirstName() + " " + update.getMessage().getFrom().getLastName() :
                 update.getMessage().getFrom().getFirstName();
 
-        if (!sessions.containsKey(employeeId)) {
-            sessionToUpdate = new Session(employeeId, employeeName, update);
-        } else {
-             sessionToUpdate = passUpdateToSession(employeeId, update);
-        }
 
-        sendMessage = sessionToUpdate.handleUpdate();
+        if (update.hasMessage() && UpdateHandler.updateContainsTopic(update) && !sessions.containsKey(employeeId)) {
+            String topic = update.getMessage().getText();
+            sessionToUpdate = new Session(employeeId, employeeName, topic);
+            sendMessage = sessionToUpdate.sendNextQuestion();
+        } else if (update.hasMessage() && !sessions.containsKey(employeeId)) {
+            sendMessage = UpdateHandler.handleMessage(update);
+        } else if (update.hasCallbackQuery()) {
+            sessionToUpdate = passUpdateToSession(employeeId, update);
+            sendMessage = sessionToUpdate.sendNextQuestion();
+        } else {
+            sendMessage = UpdateHandler.handleUpdate(update);
+        }
 
         try {
             execute(sendMessage);
@@ -82,6 +89,7 @@ public class TestBot extends TelegramLongPollingBot {
         session.setUpdate(update);
         return session;
     }
+
 }
 
 

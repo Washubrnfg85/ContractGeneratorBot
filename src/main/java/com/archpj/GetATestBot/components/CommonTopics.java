@@ -17,14 +17,14 @@ public enum CommonTopics {
         this.topic = topic;
     }
 
-    public String gettopic() {
+    public String getTopic() {
         return topic;
     }
 
     public static List<String> toList() {
         List<String> result = new ArrayList<>(CommonTopics.values().length);
         for (int i = 0; i < CommonTopics.values().length; i++) {
-            result.add(CommonTopics.values()[i].gettopic());
+            result.add(CommonTopics.values()[i].getTopic());
         }
 
         return result;
