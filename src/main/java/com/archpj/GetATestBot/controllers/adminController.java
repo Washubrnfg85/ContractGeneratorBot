@@ -1,8 +1,8 @@
 package com.archpj.GetATestBot.controllers;
 
 import com.archpj.GetATestBot.components.CommonTopics;
-import com.archpj.GetATestBot.models.Quiz;
-import com.archpj.GetATestBot.services.QuizService;
+import com.archpj.GetATestBot.models.QuizQuestion;
+import com.archpj.GetATestBot.services.QuizQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +17,10 @@ import java.util.List;
 public class adminController {
 
     @Autowired
-    private final QuizService quizService;
+    private final QuizQuestionService quizQuestionService;
 
-    public adminController(QuizService quizService) {
-        this.quizService = quizService;
+    public adminController(QuizQuestionService quizQuestionService) {
+        this.quizQuestionService = quizQuestionService;
     }
 
     @GetMapping("/")
@@ -35,8 +35,8 @@ public class adminController {
 
     @GetMapping("admin/add_question")
     public String addQuestion(Model model) {
-        Quiz quiz = new Quiz();
-        model.addAttribute("quiz", quiz);
+        QuizQuestion quizQuestion = new QuizQuestion();
+        model.addAttribute("quizQuestion", quizQuestion);
 
         List<String> topicVariants = CommonTopics.toList();
         model.addAttribute("topicVariants", topicVariants);
@@ -48,8 +48,8 @@ public class adminController {
     }
 
     @PostMapping("admin/add_question")
-    public String submitForm(@ModelAttribute("quiz") Quiz quiz) {
-        quizService.addQuestion(quiz);
+    public String submitForm(@ModelAttribute("quizQuestion") QuizQuestion quizQuestion) {
+        quizQuestionService.addQuestion(quizQuestion);
 
         return "admin/add_question_success";
     }

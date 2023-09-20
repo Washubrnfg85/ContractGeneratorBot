@@ -1,6 +1,8 @@
 package com.archpj.GetATestBot.services;
 
-import com.archpj.GetATestBot.database.QuizRepository;
+import com.archpj.GetATestBot.database.QuizQuestionRepository;
+import com.archpj.GetATestBot.models.QuizQuestion;
+import com.archpj.GetATestBot.models.QuizResult;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,33 +15,28 @@ import java.util.List;
 @Setter
 public class SessionService {
 
-    private static QuizRepository quizRepository;
+    private static QuizQuestionService quizQuestionService;
+    private static QuizResultsService quizResultsService;
 
-//    @Autowired
-//    public SessionService(QuizRepository quizRepository) {
-//        this.quizRepository = quizRepository;
-//    }
-
-    public static List<String> loadQuizQuestions(String topic) {
-        return quizRepository.loadQuizQuestions(topic);
+    @Autowired
+    public SessionService(QuizQuestionService quizQuestionService, QuizResultsService quizResultsService) {
+        SessionService.quizQuestionService = quizQuestionService;
+        SessionService.quizResultsService = quizResultsService;
     }
 
-    public static String loadCorrectAnswers(String topic) {
-        List<String> correctAnswers = quizRepository.loadCorrectAnswers(topic);
-        String result = "";
-
-        for (int i = 0; i < correctAnswers.size(); i++) {
-            result += correctAnswers.get(i);
-        }
-
-        return result;
+    public static List<QuizQuestion> loadQuizQuestions(String topic) {
+        return SessionService.quizQuestionService.loadQuizQuestions(topic);
     }
 
-//    public void addQuestion(Quiz quiz) {
+    public static void saveQuizResult(QuizResult quizResult) {
+        SessionService.saveQuizResult(quizResult);
+    }
+
+//    public void addQuestion(QuizQuestion quiz) {
 //        quizRepository.save(quiz);
 //    }
 //
-//    public boolean ifPresents(Quiz quiz) {
+//    public boolean ifPresents(QuizQuestion quiz) {
 //        return quizRepository.existsQuizByQuestion(quiz.getQuestion());
 //    }
 

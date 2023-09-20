@@ -1,18 +1,16 @@
 package com.archpj.GetATestBot.models;
 
-import com.archpj.GetATestBot.services.QuizService;
+import com.archpj.GetATestBot.services.QuizQuestionService;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
 
 @Data
 @Entity
 @Table(name = "quiz_questions")
-public class Quiz {
+public class QuizQuestion {
     @Transient
-    private QuizService quizService;
-
+    private QuizQuestionService quizQuestionService;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,15 +19,4 @@ public class Quiz {
     private String question;
     private String correctAnswer;
 
-
-    @Transient
-    private List<String> questions;
-
-    @Transient
-    private String correctAnswers;
-
-    @Transient
-    private String employeeAnswers;
-
-    public Quiz() {}
 }

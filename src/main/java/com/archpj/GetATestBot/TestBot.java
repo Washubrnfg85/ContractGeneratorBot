@@ -1,7 +1,7 @@
 package com.archpj.GetATestBot;
 
 import com.archpj.GetATestBot.config.BotConfig;
-import com.archpj.GetATestBot.database.QuizRepository;
+import com.archpj.GetATestBot.database.QuizQuestionRepository;
 import com.archpj.GetATestBot.models.Session;
 import com.archpj.GetATestBot.services.SessionService;
 import com.archpj.GetATestBot.utils.UpdateHandler;
@@ -29,7 +29,7 @@ public class TestBot extends TelegramLongPollingBot {
     @Autowired
     private SessionService sessionService;
     @Autowired
-    private QuizRepository quizRepository;
+    private QuizQuestionRepository quizQuestionRepository;
 
     public static Map<Long, Session> sessions;
 
@@ -63,11 +63,11 @@ public class TestBot extends TelegramLongPollingBot {
                 update.getMessage().getFrom().getFirstName();
 
 
-        if (update.hasMessage() && UpdateHandler.updateContainsTopic(update) && !sessions.containsKey(employeeId)) {
+        if (update.hasMessage() && UpdateHandler.updateContainsTopic(update) && !employeeHasSession(employeeId)) {
             String topic = update.getMessage().getText();
             sessionToUpdate = new Session(employeeId, employeeName, topic);
             sendMessage = sessionToUpdate.sendNextQuestion();
-        } else if (update.hasMessage() && !sessions.containsKey(employeeId)) {
+        } else if (update.hasMessage() && !employeeHasSession(employeeId)) {
             sendMessage = UpdateHandler.handleMessage(update);
         } else if (update.hasCallbackQuery()) {
             sessionToUpdate = passUpdateToSession(employeeId, update);
@@ -90,25 +90,8 @@ public class TestBot extends TelegramLongPollingBot {
         return session;
     }
 
+    public boolean employeeHasSession(long employeeId) {
+        return sessions.containsKey(employeeId);
+    }
+
 }
-
-
-
-
-
-
-
-
-//    public void sendResultToAdmin(Long adminTelegramId, String employeeName) {
-//        SendMessage messageToAdmin= SendMessage.builder().
-//                chatId(adminTelegramId).
-//                text(employeeName + " прошел тест по теме " + topic + "\n" +
-//                        "с результатом " + quizResult.getScore()).
-//                build();
-//
-//        try {
-//            execute(messageToAdmin);
-//        } catch (TelegramApiException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }

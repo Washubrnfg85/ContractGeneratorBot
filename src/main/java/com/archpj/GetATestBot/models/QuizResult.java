@@ -24,9 +24,6 @@ public class QuizResult {
 
     private Timestamp timestamp;
 
-    @Transient
-    private String score;
-
 
     public QuizResult() {}
 

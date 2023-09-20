@@ -1,6 +1,7 @@
 package com.archpj.GetATestBot.models;
 
 import com.archpj.GetATestBot.components.Buttons;
+import com.archpj.GetATestBot.services.QuizQuestionService;
 import com.archpj.GetATestBot.services.QuizResultsService;
 import com.archpj.GetATestBot.services.SessionService;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -15,7 +16,7 @@ public class Session {
     private final String employeeName;
     private final String topic;
 
-    private List<String> questions;
+    private List<QuizQuestion> quizQuestions;
     private String correctAnswers;
     private String employeeAnswers = "";
     private int iterationsThroughTest;
@@ -29,21 +30,30 @@ public class Session {
         this.employeeId = employeeId;
         this.employeeName = employeeName;
         this.topic = topic;
-        loadQuestions();
+
+        loadQuizQuestions();
         this.testInProgress = true;
         this.iterationsThroughTest = 0;
     }
 
-    public void loadQuestions() {
-        questions = SessionService.loadQuizQuestions(topic);
-        correctAnswers = SessionService.loadCorrectAnswers(topic);
+    public void loadQuizQuestions() {
+        quizQuestions = SessionService.loadQuizQuestions(topic);
+        initializeCorrectAnswers();
+    }
+
+    public void initializeCorrectAnswers() {
+        StringBuilder result = new StringBuilder();
+        for (QuizQuestion question : quizQuestions) {
+            result.append(question.getCorrectAnswer());
+        }
+        correctAnswers = result.toString();
     }
 
     public SendMessage sendNextQuestion() {
-        if (iterationsThroughTest < questions.size()) {
+        if (iterationsThroughTest < quizQuestions.size()) {
             SendMessage message = SendMessage.builder().
                     chatId(employeeId).
-                    text(questions.get(iterationsThroughTest)).
+                    text(quizQuestions.get(iterationsThroughTest).getQuestion()).
                     replyMarkup(Buttons.suggestAnswers()).
                     build();
             iterationsThroughTest++;
@@ -55,7 +65,7 @@ public class Session {
     public SendMessage completeQuiz() {
         resetIterationsThroughTest();
         setTimestamp(new Timestamp(System.currentTimeMillis()));
-        QuizResultsService.saveQuizResult(new QuizResult(employeeId, employeeName, topic,
+        SessionService.saveQuizResult(new QuizResult(employeeId, employeeName, topic,
                 correctAnswers + " " + employeeAnswers, timestamp));
         return SendMessage.builder().
                 chatId(employeeId).
@@ -96,9 +106,13 @@ public class Session {
         this.iterationsThroughTest = 0;
     }
 
-    public Update getUpdate() {
-        return update;
-    }
+//    public void sendResultToAdmin(Long adminTelegramId, String employeeName) {
+//        SendMessage messageToAdmin= SendMessage.builder().
+//                chatId(adminTelegramId).
+//                text(employeeName + " прошел тест по теме " + topic + "\n" +
+//                        "с результатом " + calculateScore()).
+//                build();
+//    }
 
     public void setUpdate(Update update) {
         this.update = update;
@@ -108,31 +122,7 @@ public class Session {
         return testInProgress;
     }
 
-    public long getEmployeeId() {
-        return employeeId;
-    }
-
-    public String getEmployeeName() {
-        return employeeName;
-    }
-
     public String getTopic() {
         return topic;
-    }
-
-    public List<String> getQuestions() {
-        return questions;
-    }
-
-    public String getCorrectAnswers() {
-        return correctAnswers;
-    }
-
-    public String getEmployeeAnswers() {
-        return employeeAnswers;
-    }
-
-    public int getIterationsThroughTest() {
-        return iterationsThroughTest;
     }
 }
