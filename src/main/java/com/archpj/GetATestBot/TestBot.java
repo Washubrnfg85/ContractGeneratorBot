@@ -60,6 +60,7 @@ public class TestBot extends TelegramLongPollingBot {
         }
         execute(sendMessage);
 
+        if (sessionManager.sessionIsOver(employeeId)) execute(sessionManager.sendResultToAdmin(employeeId));
         sessionManager.removeSessionIfComplete(employeeId);
     }
 
