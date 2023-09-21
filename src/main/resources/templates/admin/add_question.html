@@ -28,13 +28,12 @@
 <form action="#" th:action="@{/admin/add_question}" method="post" th:object="${quizQuestion}">
 
     <label>Тема:</label>
-    <select style="width: 20%" th:field="*{specialisation}">
+    <select style="width: 20%" th:field="*{topic}">
         <option th:each="s : ${specialisationVariants}" th:value="${s}" th:text="${s}"></option>
     </select><br/>
 
     <label>Вопрос:</label>
     <textarea style="height: 120px; width: 30%" type="text" th:field="*{question}"></textarea><br/>
-<!--    <input style="height: 200px" type="text" th:field="*{question}" /><br/>-->
 
     <label>Правильный ответ:</label>
     <select style="width: 5%; text-align: center" th:field="*{correctAnswer}">

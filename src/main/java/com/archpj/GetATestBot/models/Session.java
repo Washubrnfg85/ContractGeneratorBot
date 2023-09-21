@@ -1,8 +1,6 @@
 package com.archpj.GetATestBot.models;
 
 import com.archpj.GetATestBot.components.Buttons;
-import com.archpj.GetATestBot.services.QuizQuestionService;
-import com.archpj.GetATestBot.services.QuizResultsService;
 import com.archpj.GetATestBot.services.SessionService;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -34,6 +32,8 @@ public class Session {
         loadQuizQuestions();
         this.testInProgress = true;
         this.iterationsThroughTest = 0;
+
+        System.out.println("Session created");
     }
 
     public void loadQuizQuestions() {

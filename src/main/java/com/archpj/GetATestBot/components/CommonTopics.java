@@ -29,4 +29,11 @@ public enum CommonTopics {
 
         return result;
     }
+
+    public static boolean containsValue(String string) {
+        for(CommonTopics topic : CommonTopics.values()) {
+            if (string.equals(topic.getTopic())) return true;
+        }
+        return false;
+    }
 }
