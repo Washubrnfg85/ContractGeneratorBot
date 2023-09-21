@@ -1,8 +1,6 @@
 package com.archpj.GetATestBot.utils;
 
-import com.archpj.GetATestBot.components.BotCommands;
 import com.archpj.GetATestBot.components.Buttons;
-import com.archpj.GetATestBot.components.MenuOfTopics;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -36,7 +34,7 @@ public class OnQuizUpdateHandler {
                 text("""
                             Вы в процессе тестирования.
                             Ответы принимаются только нажатием на одну из кнопок выбора ответа.
-                            Если Вы хотите прервать тест, то нажмите кнопку \"Отказаться\".
+                            Если Вы хотите прервать тест, то нажмите кнопку "Отказаться".
                             Примите во внимание что в этом случае результаты не сохранятся и тест нужно будет пройти заново.""").
                 replyMarkup(Buttons.rejectTest()).
                 build();

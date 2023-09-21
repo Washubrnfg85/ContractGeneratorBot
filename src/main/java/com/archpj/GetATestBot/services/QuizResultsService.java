@@ -16,7 +16,7 @@ public class QuizResultsService {
         QuizResultsService.quizResultsRepository = quizResultsRepository;
     }
 
-    public static void saveQuizResult(QuizResult quizResult) {
+    public void saveQuizResult(QuizResult quizResult) {
         quizResultsRepository.save(quizResult);
     }
 

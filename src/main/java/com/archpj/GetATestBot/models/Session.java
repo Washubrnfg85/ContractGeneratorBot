@@ -1,9 +1,8 @@
 package com.archpj.GetATestBot.models;
 
 import com.archpj.GetATestBot.components.Buttons;
-import com.archpj.GetATestBot.services.SessionService;
+import com.archpj.GetATestBot.services.SessionServiceImpl;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -17,11 +16,9 @@ public class Session {
     private List<QuizQuestion> quizQuestions;
     private String correctAnswers;
     private String employeeAnswers = "";
-    private int iterationsThroughTest;
-
-    private Update update;
-    private boolean testInProgress = false;
     private Timestamp timestamp;
+    private int iterationsThroughTest;
+    private boolean isOver = false;
 
 
     public Session(long employeeId, String employeeName, String topic) {
@@ -29,15 +26,12 @@ public class Session {
         this.employeeName = employeeName;
         this.topic = topic;
 
-        loadQuizQuestions();
-        this.testInProgress = true;
+        loadQuizQuestions();  //
         this.iterationsThroughTest = 0;
-
-        System.out.println("Session created");
     }
 
     public void loadQuizQuestions() {
-        quizQuestions = SessionService.loadQuizQuestions(topic);
+        quizQuestions = SessionServiceImpl.loadQuizQuestions(topic);
         initializeCorrectAnswers();
     }
 
@@ -47,6 +41,10 @@ public class Session {
             result.append(question.getCorrectAnswer());
         }
         correctAnswers = result.toString();
+    }
+
+    public void appendAnswer(String letter) {
+        this.employeeAnswers += letter;
     }
 
     public SendMessage sendNextQuestion() {
@@ -63,10 +61,12 @@ public class Session {
     }
 
     public SendMessage completeQuiz() {
-        resetIterationsThroughTest();
+        System.out.println("CompleteQuiz");
+
         setTimestamp(new Timestamp(System.currentTimeMillis()));
-        SessionService.saveQuizResult(new QuizResult(employeeId, employeeName, topic,
-                correctAnswers + " " + employeeAnswers, timestamp));
+        SessionServiceImpl.saveQuizResult(new QuizResult(employeeId, employeeName, topic,
+                correctAnswers + "\n" + employeeAnswers, timestamp));
+        this.isOver = true;
         return SendMessage.builder().
                 chatId(employeeId).
                 text("Тест по теме " + topic + " завершен.\n" +
@@ -76,6 +76,8 @@ public class Session {
     }
 
     public String calculateScore() {
+        System.out.println("Calculate Score");
+
         String score = "";
 
         if (correctAnswers.equals(employeeAnswers)) {
@@ -102,8 +104,8 @@ public class Session {
         this.timestamp = timestamp;
     }
 
-    public void resetIterationsThroughTest() {
-        this.iterationsThroughTest = 0;
+    public boolean isOver() {
+        return this.isOver;
     }
 
 //    public void sendResultToAdmin(Long adminTelegramId, String employeeName) {
@@ -113,16 +115,4 @@ public class Session {
 //                        "с результатом " + calculateScore()).
 //                build();
 //    }
-
-    public void setUpdate(Update update) {
-        this.update = update;
-    }
-
-    public boolean isTestInProgress() {
-        return testInProgress;
-    }
-
-    public String getTopic() {
-        return topic;
-    }
 }
