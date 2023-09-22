@@ -5,6 +5,7 @@ import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;
 import java.util.List;
 
 public interface BotCommands {
+
     List<BotCommand> COMMANDS = List.of(
             new BotCommand("/start", "Начать все сначала"),
             new BotCommand("/help", "Помощь")

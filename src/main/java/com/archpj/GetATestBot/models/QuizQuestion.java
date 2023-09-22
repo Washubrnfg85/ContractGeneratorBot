@@ -9,6 +9,7 @@ import lombok.Data;
 @Entity
 @Table(name = "quiz_questions")
 public class QuizQuestion {
+
     @Transient
     private QuizQuestionService quizQuestionService;
 

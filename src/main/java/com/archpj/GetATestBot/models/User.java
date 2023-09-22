@@ -15,11 +15,11 @@ public class User {
     private int id;
 
     @NotEmpty(message = "Имя не может быть пустым")
-    @Size(min = 2, max = 50, message = "Имя не может быть короче 2 и длиннее 50 символов")
+    @Size(min = 2, max = 50, message = "Имя должно содержать от 2 до 50 символов")
     @Column(name = "userName")
     private String userName;
 
-    @Min(value = 1900, message = "Год рождения не может быть меньше 1900")
+    @Min(value = 1900, message = "Год рождения должен быть позже 1900г.")
     @Column(name = "year_of_birth")
     private int yearOfBirth;
 
@@ -31,38 +31,6 @@ public class User {
     public User (String userName, int yearOfBirth) {
         this.userName = userName;
         this.yearOfBirth = yearOfBirth;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public int getYearOfBirth() {
-        return yearOfBirth;
-    }
-
-    public void setYearOfBirth(int yearOfBirth) {
-        this.yearOfBirth = yearOfBirth;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     @Override

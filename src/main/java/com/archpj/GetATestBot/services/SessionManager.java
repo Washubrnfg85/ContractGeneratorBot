@@ -33,27 +33,21 @@ public class SessionManager {
         SendMessage sendMessage;
 
         if (employeeHasSession(employeeId)) {
-            System.out.println("if 1");
             sendMessage = OnQuizUpdateHandler.handleUpdate(update);
         } else {
-            System.out.println("else 1");
             sendMessage = OutOfQuizUpdateHandler.handleUpdate(update);
         }
 
         if (sendMessage.getText().matches("[A-D]") || CommonTopics.containsValue(sendMessage.getText())) {
-            System.out.println("if 2");
             if (!employeeHasSession(employeeId)) {
                 Session newSession = new Session(employeeId, employeeName, sendMessage.getText());
                 loadQuizQuestions(newSession);
                 sessions.put(employeeId, newSession);
-
-                System.out.println("Session created");
             } else {
                 sessions.get(employeeId).appendAnswer(sendMessage.getText());
             }
             sendMessage = sendNextQuestion(sessions.get(employeeId));
             incrementIteration(sessions.get(employeeId));
-            System.out.println("Sent next question");
         }
         return sendMessage;
     }
@@ -107,8 +101,6 @@ public class SessionManager {
     }
 
     public String calculateScore(Session session) {
-        System.out.println("Calculate Score");
-
         String correctAnswers = session.getCorrectAnswers();
         String employeeAnswers = session.getEmployeeAnswers();
 
@@ -140,10 +132,6 @@ public class SessionManager {
         session.setIterationsThroughTest(iteration);
     }
 
-    public boolean employeeHasSession(long employeeId) {
-        return sessions.containsKey(employeeId);
-    }
-
     public boolean sessionIsOver(long employeeId) {
         return sessions.containsKey(employeeId) && sessions.get(employeeId).isOver();
     }
@@ -151,7 +139,6 @@ public class SessionManager {
     public void removeSessionIfComplete(long employeeId) {
         if (employeeHasSession(employeeId) && sessions.get(employeeId).isOver()) {
             sessions.remove(employeeId);
-            System.out.println("Session removed");
         }
     }
 
@@ -165,6 +152,10 @@ public class SessionManager {
                 text(employeeName + " прошел тест по теме " + topic + "\n" +
                         "с результатом " + calculateScore(session)).
                 build();
+    }
+
+    public boolean employeeHasSession(long employeeId) {
+        return sessions.containsKey(employeeId);
     }
 
 }

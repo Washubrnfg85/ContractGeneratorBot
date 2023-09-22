@@ -9,7 +9,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 public class OnQuizUpdateHandler {
 
     public static SendMessage handleUpdate(Update update) {
-
         if (update.hasMessage()) return handleMessage(update);
         if (update.hasCallbackQuery()) return handleCallbackQuery(update);
 
@@ -23,8 +22,6 @@ public class OnQuizUpdateHandler {
 
 
     private static SendMessage handleMessage(Update update) {
-        System.out.println("OnQuiz message");
-
         Message incomingMessage = update.getMessage();
         long employeeId = incomingMessage.getFrom().getId();
         SendMessage message;
@@ -43,8 +40,6 @@ public class OnQuizUpdateHandler {
     }
 
     private static SendMessage handleCallbackQuery(Update update) {
-        System.out.println("OnQuiz callback");
-
         CallbackQuery callbackQuery = update.getCallbackQuery();
         long employeeId = callbackQuery.getFrom().getId();
         SendMessage message;

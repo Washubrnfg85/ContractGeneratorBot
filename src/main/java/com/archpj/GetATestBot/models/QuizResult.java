@@ -13,17 +13,11 @@ public class QuizResult {
     @Id
     @GeneratedValue
     private int id;
-
     private long employeeId;
-
     private String employeeName;
-
     private String topic;
-
     private String results;
-
     private Timestamp timestamp;
-
 
     public QuizResult() {}
 
