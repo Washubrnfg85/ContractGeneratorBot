@@ -29,7 +29,7 @@
 
     <label>Тема:</label>
     <select style="width: 20%" th:field="*{topic}">
-        <option th:each="s : ${specialisationVariants}" th:value="${s}" th:text="${s}"></option>
+        <option th:each="t : ${topicVariants}" th:value="${t}" th:text="${t}"></option>
     </select><br/>
 
     <label>Вопрос:</label>

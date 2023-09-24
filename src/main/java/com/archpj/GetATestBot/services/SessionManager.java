@@ -81,7 +81,6 @@ public class SessionManager {
     }
 
     public SendMessage completeQuiz(Session session) {
-        System.out.println("CompleteQuiz");
         long employeeId = session.getEmployeeId();
         String employeeName = session.getEmployeeName();
         String topic = session.getTopic();

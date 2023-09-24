@@ -5,6 +5,8 @@ import com.archpj.GetATestBot.models.QuizResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Service
 @Transactional
@@ -20,4 +22,7 @@ public class QuizResultsService {
         quizResultsRepository.save(quizResult);
     }
 
+    public List<QuizResult> getQuizResults() {
+        return quizResultsRepository.findAll();
+    }
 }

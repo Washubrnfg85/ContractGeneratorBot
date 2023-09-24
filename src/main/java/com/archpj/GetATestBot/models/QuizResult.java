@@ -28,4 +28,30 @@ public class QuizResult {
         this.results = results;
         this.timestamp = timestamp;
     }
+
+    public String calculateScore() {
+        String[] array = results.split("\n");
+        String correctAnswers = array[0];
+        String employeeAnswers = array[1];
+
+        String score = "";
+
+        if (correctAnswers.equals(employeeAnswers)) {
+            score = employeeAnswers.length() + "/" + correctAnswers.length();
+        } else {
+            String[] correctLetters = correctAnswers.split("");
+            String[] employeeLetters = employeeAnswers.split("");
+
+            if (correctLetters.length == employeeLetters.length) {
+                int numberOfScores = 0;
+                for (int i = 0; i < correctLetters.length; i++) {
+                    if (correctLetters[i].equals(employeeLetters[i])) numberOfScores++;
+                }
+                score = numberOfScores + "/" + correctAnswers.length();
+            } else {
+                score = "Неизвестная ошибка.";
+            }
+        }
+        return score;
+    }
 }
