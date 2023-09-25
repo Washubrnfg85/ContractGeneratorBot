@@ -17,6 +17,10 @@ public class QuizQuestionService {
         QuizQuestionService.quizQuestionRepository = quizQuestionRepository;
     }
 
+    public List<QuizQuestion> loadAllQuestions() {
+        return quizQuestionRepository.findAll();
+    }
+
     public List<QuizQuestion> loadQuizQuestions(String topic) {
         return QuizQuestionService.quizQuestionRepository.loadQuizQuestions(topic);
     }

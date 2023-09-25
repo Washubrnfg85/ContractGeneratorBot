@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Questions</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<table>
+    <thead>
+    <tr>
+        <th> Тема </th>
+        <th> Вопрос </th>
+        <th> Правильный вариант </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="quizQuestion : ${QuizQuestions}">
+        <td><span th:text="${quizQuestion.topic}"> Тема </span></td>
+        <td><span th:text="${quizQuestion.question}"> Вопрос </span></td>
+        <td><span th:text="${quizQuestion.correctAnswer}"> Правильный вариант </span></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 @Data
 @Entity
@@ -53,5 +54,12 @@ public class QuizResult {
             }
         }
         return score;
+    }
+
+    public String trimTimestamp() {
+        if (timestamp != null) {
+            return new SimpleDateFormat("dd.MM.yyyy  hh:mm").format(timestamp);
+        }
+        return "";
     }
 }

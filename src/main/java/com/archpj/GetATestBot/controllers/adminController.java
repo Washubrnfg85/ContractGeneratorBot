@@ -34,12 +34,12 @@ public class adminController {
         return "index";
     }
 
-    @GetMapping("/admin")
+    @GetMapping("/admin/admin")
     public String admin() {
-        return "admin";
+        return "admin/admin";
     }
 
-    @GetMapping("admin/add_question")
+    @GetMapping("admin/questions/add_question")
     public String addQuestion(Model model) {
         QuizQuestion quizQuestion = new QuizQuestion();
         model.addAttribute("quizQuestion", quizQuestion);
@@ -50,14 +50,14 @@ public class adminController {
         List<String> answerVariants = Arrays.asList("A", "B", "C", "D");
         model.addAttribute("answerVariants", answerVariants);
 
-        return "admin/add_question";
+        return "admin/questions/add_question";
     }
 
-    @PostMapping("admin/add_question")
+    @PostMapping("admin/questions/add_question")
     public String submitForm(@ModelAttribute("quizQuestion") QuizQuestion quizQuestion) {
         quizQuestionService.addQuestion(quizQuestion);
 
-        return "admin/add_question_success";
+        return "admin/questions/add_question_success";
     }
 
     @GetMapping("admin/show_data")
@@ -65,11 +65,19 @@ public class adminController {
         return "admin/show_data";
     }
 
-    @GetMapping("admin/show_results")
+    @GetMapping("admin/results/show_results")
     public String showAllQuizResults(Model model) {
         List<QuizResult> QuizResults = quizResultsService.getQuizResults();
         model.addAttribute("QuizResults", QuizResults);
 
-        return "admin/show_results";
+        return "admin/results/show_results";
+    }
+
+    @GetMapping("admin/questions/show_questions")
+    public String showAllQuizQuestions(Model model) {
+        List<QuizQuestion> QuizQuestions = quizQuestionService.loadAllQuestions();
+        model.addAttribute("QuizQuestions", QuizQuestions);
+
+        return "admin/questions/show_questions";
     }
 }
