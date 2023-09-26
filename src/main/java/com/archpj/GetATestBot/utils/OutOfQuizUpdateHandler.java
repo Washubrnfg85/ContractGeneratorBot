@@ -28,36 +28,31 @@ public class OutOfQuizUpdateHandler {
 
         long employeeId = incomingMessage.getFrom().getId();
         String incomingText = incomingMessage.getText();
-        SendMessage message;
 
-        switch (incomingText) {
-            case "/start" -> message = SendMessage.builder().
+        return switch (incomingText) {
+            case "/start" -> SendMessage.builder().
                     chatId(employeeId).
                     text("Выбирайте тему").
                     replyMarkup(MenuOfTopics.generateMenu()).
                     build();
-            case "/help" -> message = SendMessage.builder().
+            case "/help" -> SendMessage.builder().
                     chatId(employeeId).
                     text(BotCommands.HELP_TEXT).
                     build();
-            default -> message = SendMessage.builder().
+            default -> SendMessage.builder().
                     chatId(employeeId).
                     text(incomingText).
                     build();
-        }
-        return message;
+        };
     }
 
     private static SendMessage handleCallbackQuery(Update update) {
         CallbackQuery callbackQuery = update.getCallbackQuery();
         long employeeId = callbackQuery.getFrom().getId();
-        SendMessage message;
 
-        message = SendMessage.builder().
+        return SendMessage.builder().
                 chatId(employeeId).
                 text("Если Вы читаете это сообщение, то что-то пошло не так. Обратитесь к разработчику").
                 build();
-
-        return message;
     }
 }

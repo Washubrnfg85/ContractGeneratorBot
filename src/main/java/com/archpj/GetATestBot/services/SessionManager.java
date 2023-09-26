@@ -20,10 +20,10 @@ import java.util.Map;
 @Component
 public class SessionManager {
 
-    @Autowired
     private final SessionService sessionService;
     private Map<Long, Session> sessions;
 
+    @Autowired
     public SessionManager(SessionService sessionService) {
         this.sessionService = sessionService;
         this.sessions = new HashMap<>();
