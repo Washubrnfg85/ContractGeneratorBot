@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add question</title>
+    <style type="text/css">
+    label {
+        display: inline-block;
+        width: 200px;
+        margin: 5px;
+        text-align: left;
+    }
+    input[type=text], select {
+        display: inline-block;
+        width: 40%;
+    }
+
+
+    button {
+        padding: 5px;
+        margin: 10px;
+    }
+</style>
+</head>
+<body>
+<h3>Add question</h3>
+
+<form action="#" th:action="@{/admin/questions/add_question}" method="post" th:object="${quizQuestion}">
+
+    <label>Тема:</label>
+    <select style="width: 20%" th:field="*{topic}">
+        <option th:each="t : ${topicVariants}" th:value="${t}" th:text="${t}"></option>
+    </select><br/>
+
+    <label>Вопрос:</label>
+    <textarea style="height: 120px; width: 30%" type="text" th:field="*{question}"></textarea><br/>
+
+    <label>Правильный ответ:</label>
+    <select style="width: 5%; text-align: center" th:field="*{correctAnswer}">
+        <option th:each="l : ${answerVariants}" th:value="${l}" th:text="${l}"></option>
+    </select><br/>
+
+    <button type="submit">Добавить</button>
+
+</form>
+<br/>
+
+<a href="../admin">Отставить</a>
+
+</body>
+</html>

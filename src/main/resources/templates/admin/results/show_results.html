@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All results</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<table>
+    <thead>
+    <tr>
+        <th> Имя </th>
+        <th> Тема </th>
+        <th> Результат </th>
+        <th> Время </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="quizResult : ${QuizResults}">
+        <td><span th:text="${quizResult.employeeName}"> Имя </span></td>
+        <td><span th:text="${quizResult.topic}"> Тема </span></td>
+        <td><span th:text="${quizResult.calculateScore}"> Результат </span></td>
+        <td><span th:text="${quizResult.trimTimestamp}"> Время </span></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

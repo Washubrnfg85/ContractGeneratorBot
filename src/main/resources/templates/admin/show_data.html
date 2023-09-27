@@ -1,21 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Get data</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <h3>Варианты запросов:</h3>
 
-<p style="text-align:center">&nbsp;</p>
-
-<p style="text-align:center">&nbsp;</p>
-
-<table border="5" cellpadding="5" cellspacing="5" style="width:80%">
+<table>
     <tbody>
     <tr>
-        <td><a href="show_results">Посмотреть результаты</a></td>
+        <td><a href="results/show_results">Посмотреть результаты</a></td>
         <td>Переход к списку сотрудников, прошедших тест</td>
+    </tr>
+    <tr>
+        <td><a href="questions/show_questions">Посмотреть все вопросы</a></td>
+        <td>Переход к списку вопросов в базе данных</td>
     </tr>
     <tr>
         <td><a href="">Заглушка</a></td>
