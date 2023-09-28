@@ -1,10 +1,10 @@
 package com.archpj.getatestbot.controllers;
 
 import com.archpj.getatestbot.components.CommonTopics;
+import com.archpj.getatestbot.database.QuizQuestionRepository;
+import com.archpj.getatestbot.database.QuizResultsRepository;
 import com.archpj.getatestbot.models.QuizQuestion;
 import com.archpj.getatestbot.models.QuizResult;
-import com.archpj.getatestbot.services.QuizQuestionService;
-import com.archpj.getatestbot.services.QuizResultsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,15 +19,11 @@ import java.util.List;
 public class adminController {
 
     @Autowired
-    private final QuizQuestionService quizQuestionService;
+    private QuizQuestionRepository quizQuestionRepository;
 
     @Autowired
-    private final QuizResultsService quizResultsService;
+    private QuizResultsRepository quizResultsRepository;
 
-    public adminController(QuizQuestionService quizQuestionService, QuizResultsService quizResultsService) {
-        this.quizQuestionService = quizQuestionService;
-        this.quizResultsService = quizResultsService;
-    }
 
     @GetMapping("/")
     public String index() {
@@ -55,7 +51,7 @@ public class adminController {
 
     @PostMapping("admin/questions/add_question")
     public String submitForm(@ModelAttribute("quizQuestion") QuizQuestion quizQuestion) {
-        quizQuestionService.addQuestion(quizQuestion);
+        quizQuestionRepository.save(quizQuestion);
 
         return "admin/questions/add_question_success";
     }
@@ -67,7 +63,7 @@ public class adminController {
 
     @GetMapping("admin/results/show_results")
     public String showAllQuizResults(Model model) {
-        List<QuizResult> QuizResults = quizResultsService.getQuizResults();
+        List<QuizResult> QuizResults = quizResultsRepository.findAll();
         model.addAttribute("QuizResults", QuizResults);
 
         return "admin/results/show_results";
@@ -75,7 +71,7 @@ public class adminController {
 
     @GetMapping("admin/questions/show_questions")
     public String showAllQuizQuestions(Model model) {
-        List<QuizQuestion> QuizQuestions = quizQuestionService.loadAllQuestions();
+        List<QuizQuestion> QuizQuestions = quizQuestionRepository.findAll();
         model.addAttribute("QuizQuestions", QuizQuestions);
 
         return "admin/questions/show_questions";

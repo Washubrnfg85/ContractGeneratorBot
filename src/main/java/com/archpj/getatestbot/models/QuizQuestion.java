@@ -1,6 +1,5 @@
 package com.archpj.getatestbot.models;
 
-import com.archpj.getatestbot.services.QuizQuestionService;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -9,9 +8,6 @@ import lombok.Data;
 @Entity
 @Table(name = "quiz_questions")
 public class QuizQuestion {
-
-    @Transient
-    private QuizQuestionService quizQuestionService;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
