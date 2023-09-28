@@ -28,36 +28,37 @@ public class OutOfQuizUpdateHandler {
 
         long employeeId = incomingMessage.getFrom().getId();
         String incomingText = incomingMessage.getText();
-        SendMessage message;
 
         switch (incomingText) {
-            case "/start" -> message = SendMessage.builder().
-                    chatId(employeeId).
-                    text("Выбирайте тему").
-                    replyMarkup(MenuOfTopics.generateMenu()).
-                    build();
-            case "/help" -> message = SendMessage.builder().
-                    chatId(employeeId).
-                    text(BotCommands.HELP_TEXT).
-                    build();
-            default -> message = SendMessage.builder().
-                    chatId(employeeId).
-                    text(incomingText).
-                    build();
+            case "/start" -> {
+                return SendMessage.builder().
+                        chatId(employeeId).
+                        text("Выбирайте тему").
+                        replyMarkup(MenuOfTopics.generateMenu()).
+                        build();
+            }
+            case "/help" -> {
+                return SendMessage.builder().
+                        chatId(employeeId).
+                        text(BotCommands.HELP_TEXT).
+                        build();
+            }
+            default -> {
+                return SendMessage.builder().
+                        chatId(employeeId).
+                        text(incomingText).
+                        build();
+            }
         }
-        return message;
     }
 
     private static SendMessage handleCallbackQuery(Update update) {
         CallbackQuery callbackQuery = update.getCallbackQuery();
         long employeeId = callbackQuery.getFrom().getId();
-        SendMessage message;
 
-        message = SendMessage.builder().
+        return SendMessage.builder().
                 chatId(employeeId).
                 text("Если Вы читаете это сообщение, то что-то пошло не так. Обратитесь к разработчику").
                 build();
-
-        return message;
     }
 }

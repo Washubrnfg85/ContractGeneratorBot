@@ -11,6 +11,7 @@ import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.meta.api.methods.commands.SetMyCommands;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.commands.scope.BotCommandScopeDefault;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -47,9 +48,10 @@ public class TestBot extends TelegramLongPollingBot {
     @SneakyThrows
     public void onUpdateReceived(Update update) {
 
+        User user = update.hasMessage() ? update.getMessage().getFrom() : update.getCallbackQuery().getFrom();
         SendMessage sendMessage;
-        long employeeId = extractEmployeeId(update);
-        String employeeName = extractEmployeeName(update);
+        long employeeId = user.getId();
+        String employeeName = extractEmployeeName(user);
 
         sendMessage = sessionManager.processUpdate(update, employeeId, employeeName);
 
@@ -65,19 +67,7 @@ public class TestBot extends TelegramLongPollingBot {
         sessionManager.removeSessionIfComplete(employeeId);
     }
 
-    public long extractEmployeeId(Update update) {
-        return update.hasMessage() ?
-                update.getMessage().getFrom().getId() :
-                update.getCallbackQuery().getFrom().getId();
-    }
-
-    public String extractEmployeeName(Update update) {
-        return update.hasMessage() ?
-                update.getMessage().getFrom().getLastName() != null ?
-                        update.getMessage().getFrom().getFirstName() + " " + update.getMessage().getFrom().getLastName() :
-                        update.getMessage().getFrom().getFirstName() :
-                update.getCallbackQuery().getFrom().getLastName() != null ?
-                        update.getCallbackQuery().getFrom().getFirstName() + " " + update.getCallbackQuery().getFrom().getLastName() :
-                        update.getCallbackQuery().getFrom().getFirstName();
+    public String extractEmployeeName(User user) {
+        return user.getLastName() != null ? user.getFirstName() + " " + user.getLastName() : user.getFirstName();
     }
 }

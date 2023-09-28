@@ -24,9 +24,8 @@ public class OnQuizUpdateHandler {
     private static SendMessage handleMessage(Update update) {
         Message incomingMessage = update.getMessage();
         long employeeId = incomingMessage.getFrom().getId();
-        SendMessage message;
 
-        message = SendMessage.builder().
+        return SendMessage.builder().
                 chatId(employeeId).
                 text("""
                             Вы в процессе тестирования.
@@ -35,31 +34,32 @@ public class OnQuizUpdateHandler {
                             Примите во внимание что в этом случае результаты не сохранятся и тест нужно будет пройти заново.""").
                 replyMarkup(Buttons.rejectTest()).
                 build();
-
-        return message;
     }
 
     private static SendMessage handleCallbackQuery(Update update) {
         CallbackQuery callbackQuery = update.getCallbackQuery();
         long employeeId = callbackQuery.getFrom().getId();
-        SendMessage message;
 
         switch (callbackQuery.getData()) {
-            case "Отказаться" -> message = SendMessage.builder().
-                    chatId(employeeId).
-                    text("reject").
-                    build();
-            case "A", "B", "C", "D" -> message = SendMessage.builder().
-                    chatId(employeeId).
-                    text(callbackQuery.getData()).
-                    build();
-            default -> message = SendMessage.builder().
+            case "Отказаться" -> {
+                return SendMessage.builder().
                         chatId(employeeId).
-                        text("Если Вы читаете это сообщение, то что-то пошло не так. Обратитесь к разработчику").
+                        text("reject").
                         build();
-
+            }
+            case "A", "B", "C", "D" -> {
+                return SendMessage.builder().
+                        chatId(employeeId).
+                        text(callbackQuery.getData()).
+                        build();
+            }
+            default -> {
+                return SendMessage.builder().
+                            chatId(employeeId).
+                            text("Если Вы читаете это сообщение, то что-то пошло не так. Обратитесь к разработчику").
+                            build();
+            }
         }
-        return message;
     }
 
 }
