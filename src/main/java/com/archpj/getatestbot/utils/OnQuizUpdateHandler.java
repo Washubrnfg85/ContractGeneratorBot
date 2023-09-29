@@ -40,21 +40,26 @@ public class OnQuizUpdateHandler {
         CallbackQuery callbackQuery = update.getCallbackQuery();
         long employeeId = callbackQuery.getFrom().getId();
 
-        return switch (callbackQuery.getData()) {
-            case "Отказаться" -> SendMessage.builder().
-                    chatId(employeeId).
-                    text("reject").
-                    build();
-            case "A", "B", "C", "D" -> SendMessage.builder().
-                    chatId(employeeId).
-                    text(callbackQuery.getData()).
-                    build();
-            default -> SendMessage.builder().
+        switch (callbackQuery.getData()) {
+            case "Отказаться" -> {
+                return SendMessage.builder().
                         chatId(employeeId).
-                        text("Если Вы читаете это сообщение, то что-то пошло не так. Обратитесь к разработчику").
+                        text("reject").
                         build();
-
-        };
+            }
+            case "A", "B", "C", "D" -> {
+                return SendMessage.builder().
+                        chatId(employeeId).
+                        text(callbackQuery.getData()).
+                        build();
+            }
+            default -> {
+                return SendMessage.builder().
+                            chatId(employeeId).
+                            text("Если Вы читаете это сообщение, то что-то пошло не так. Обратитесь к разработчику").
+                            build();
+            }
+        }
     }
 
 }

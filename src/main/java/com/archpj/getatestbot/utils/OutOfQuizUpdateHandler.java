@@ -29,21 +29,27 @@ public class OutOfQuizUpdateHandler {
         long employeeId = incomingMessage.getFrom().getId();
         String incomingText = incomingMessage.getText();
 
-        return switch (incomingText) {
-            case "/start" -> SendMessage.builder().
-                    chatId(employeeId).
-                    text("Выбирайте тему").
-                    replyMarkup(MenuOfTopics.generateMenu()).
-                    build();
-            case "/help" -> SendMessage.builder().
-                    chatId(employeeId).
-                    text(BotCommands.HELP_TEXT).
-                    build();
-            default -> SendMessage.builder().
-                    chatId(employeeId).
-                    text(incomingText).
-                    build();
-        };
+        switch (incomingText) {
+            case "/start" -> {
+                return SendMessage.builder().
+                        chatId(employeeId).
+                        text("Выбирайте тему").
+                        replyMarkup(MenuOfTopics.generateMenu()).
+                        build();
+            }
+            case "/help" -> {
+                return SendMessage.builder().
+                        chatId(employeeId).
+                        text(BotCommands.HELP_TEXT).
+                        build();
+            }
+            default -> {
+                return SendMessage.builder().
+                        chatId(employeeId).
+                        text(incomingText).
+                        build();
+            }
+        }
     }
 
     private static SendMessage handleCallbackQuery(Update update) {

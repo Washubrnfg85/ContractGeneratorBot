@@ -47,12 +47,14 @@ public class TestBot extends TelegramLongPollingBot {
 
     @SneakyThrows
     public void onUpdateReceived(Update update) {
+
         User user = update.hasMessage() ? update.getMessage().getFrom() : update.getCallbackQuery().getFrom();
         long employeeId = user.getId();
-        String employeeName = extractEmployeeName(user);
+        String employeeName = user.getLastName() != null ?
+                user.getFirstName() + " " + user.getLastName() :
+                user.getFirstName();
 
-        SendMessage sendMessage;
-        sendMessage = sessionManager.processUpdate(update, employeeId, employeeName);
+        SendMessage sendMessage = sessionManager.processUpdate(update, employeeId, employeeName);
 
         if (update.hasCallbackQuery()) {
             AnswerCallbackQuery close = AnswerCallbackQuery.builder()
@@ -64,9 +66,5 @@ public class TestBot extends TelegramLongPollingBot {
 
         if (sessionManager.sessionIsOver(employeeId)) execute(sessionManager.sendResultToAdmin(employeeId));
         sessionManager.removeSessionIfComplete(employeeId);
-    }
-
-    public String extractEmployeeName(User user) {
-        return user.getLastName() == null ? user.getFirstName() : user.getFirstName() + " " + user.getLastName();
     }
 }
