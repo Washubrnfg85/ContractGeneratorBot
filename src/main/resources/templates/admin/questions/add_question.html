@@ -3,26 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Add question</title>
-    <style type="text/css">
-    label {
-        display: inline-block;
-        width: 200px;
-        margin: 5px;
-        text-align: left;
-    }
-    input[type=text], select {
-        display: inline-block;
-        width: 40%;
-    }
-
-
-    button {
-        padding: 5px;
-        margin: 10px;
-    }
-</style>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+
+<div id="global">
+    <div class="menu">
+        <ul>
+            <li><a href="show_questions">Вопросы</a></li>
+            <li><a href="#">Найти сотрудника</a></li>
+            <li><a href="/">Все результаты</a></li>
+            <li><a href="#">Кнопка 4</a></li>
+        </ul>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+
 <h3>Add question</h3>
 
 <form action="#" th:action="@{/admin/questions/add_question}" method="post" th:object="${quizQuestion}">
@@ -37,15 +33,13 @@
 
     <label>Правильный ответ:</label>
     <select style="width: 5%; text-align: center" th:field="*{correctAnswer}">
-        <option th:each="l : ${answerVariants}" th:value="${l}" th:text="${l}"></option>
+        <option th:each="a : ${answerVariants}" th:value="${a}" th:text="${a}"></option>
     </select><br/>
 
     <button type="submit">Добавить</button>
 
 </form>
 <br/>
-
-<a href="../admin">Отставить</a>
 
 </body>
 </html>
