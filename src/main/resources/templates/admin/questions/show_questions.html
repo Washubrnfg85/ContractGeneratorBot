@@ -7,6 +7,28 @@
 </head>
 <body>
 
+<div id="global">
+    <div class="menu">
+        <ul>
+            <li><a href="add_question">Добавить вопрос</a></li>
+            <li><a href="#">Найти сотрудника</a></li>
+            <li><a href="/">Все результаты</a></li>
+            <li><a href="#">Кнопка 4</a></li>
+            <li style="width=100px">
+                <form action="#" th:action="@{/admin/questions/sort_questions}" method="post" th:object="${quizQuestion}">
+                    <label>Сортировка по теме:</label>
+                    <select th:field="*{topic}">
+                        <option th:each="t : ${topicVariants}" th:value="${t}" th:text="${t}"></option>
+                    </select>
+                    <button type="submit">-></button>
+                </form>
+
+            </li>
+        </ul>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+
 <table>
     <thead>
     <tr>
@@ -16,7 +38,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="quizQuestion : ${QuizQuestions}">
+    <tr th:each="quizQuestion : ${quizQuestions}" onclick="document.location='sort_questions'" >
         <td><span th:text="${quizQuestion.topic}"> Тема </span></td>
         <td><span th:text="${quizQuestion.question}"> Вопрос </span></td>
         <td><span th:text="${quizQuestion.correctAnswer}"> Правильный вариант </span></td>

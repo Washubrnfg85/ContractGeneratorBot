@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Questions sorted by topic</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div id="global">
+  <div class="menu">
+    <ul>
+      <li><a href="add_question">Добавить вопрос</a></li>
+      <li><a href="#">Найти сотрудника</a></li>
+      <li><a href="/">Все результаты</a></li>
+      <li style="width=100px">
+        <form action="#" th:action="@{/admin/questions/sort_questions}" method="post" th:object="${anotherQuizQuestion}">
+          <label>Сортировка по теме:</label>
+          <select th:field="*{topic}">
+            <option th:each="t : ${topicVariants}" th:value="${t}" th:text="${t}"></option>
+          </select>
+          <button type="submit">-></button>
+        </form>
+
+      </li>
+    </ul>
+  </div>
+  <div style="clear: both;"></div>
+</div>
+
+<table>
+  <thead>
+  <tr>
+    <th> Тема </th>
+    <th> Вопрос </th>
+    <th> Правильный вариант </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="quizQuestion : ${quizQuestions}">
+    <td><span th:text="${quizQuestion.topic}"> Тема </span></td>
+    <td><span th:text="${quizQuestion.question}"> Вопрос </span></td>
+    <td><span th:text="${quizQuestion.correctAnswer}"> Правильный вариант </span></td>
+  </tr>
+  </tbody>
+</table>
+
+</body>
+</html>l>
