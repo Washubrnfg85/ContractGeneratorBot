@@ -15,18 +15,17 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Component
 public class SessionManager {
 
     private final SessionService sessionService;
-    private Map<Long, Session> sessions;
+    private final SessionStore sessionStore;
 
     @Autowired
-    public SessionManager(SessionService sessionService) {
+    public SessionManager(SessionService sessionService, SessionStore sessionStore) {
         this.sessionService = sessionService;
-        this.sessions = new HashMap<>();
+        this.sessionStore = sessionStore;
     }
 
     public SendMessage processUpdate(Update update, long employeeId, String employeeName) {
@@ -42,12 +41,12 @@ public class SessionManager {
             if (!employeeHasSession(employeeId)) {
                 Session newSession = new Session(employeeId, employeeName, sendMessage.getText());
                 loadQuizQuestions(newSession);
-                sessions.put(employeeId, newSession);
+                sessionStore.save(employeeId, newSession);
             } else {
-                sessions.get(employeeId).appendAnswer(sendMessage.getText());
+                sessionStore.get(employeeId).appendAnswer(sendMessage.getText());
             }
-            sendMessage = sendNextQuestion(sessions.get(employeeId));
-            incrementIteration(sessions.get(employeeId));
+            sendMessage = sendNextQuestion(sessionStore.get(employeeId));
+            incrementIteration(sessionStore.get(employeeId));
         }
         return sendMessage;
     }
@@ -91,7 +90,7 @@ public class SessionManager {
         QuizResult quizResult = new QuizResult(employeeId, employeeName, topic,
                 correctAnswers + "\n" + employeeAnswers, timestamp);
 
-        sessions.get(employeeId).setQuizResult(quizResult);
+        sessionStore.get(employeeId).setQuizResult(quizResult);
         sessionService.saveQuizResult(quizResult);
         session.setOver(true);
 
@@ -116,7 +115,7 @@ public class SessionManager {
 
     public void removeSessionIfComplete(long employeeId) {
         if (employeeHasSession(employeeId) && sessions.get(employeeId).isOver()) {
-            sessions.remove(employeeId);
+            sessionStore.remove(employeeId);
         }
     }
 
