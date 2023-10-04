@@ -14,7 +14,7 @@
             <li><a href="#">Найти сотрудника</a></li>
             <li><a href="/">Все результаты</a></li>
             <li><a href="#">Кнопка 4</a></li>
-            <li style="width=100px">
+            <li style="width=100%">
                 <form action="#" th:action="@{/admin/questions/sort_questions}" method="post" th:object="${quizQuestion}">
                     <label>Сортировка по теме:</label>
                     <select th:field="*{topic}">

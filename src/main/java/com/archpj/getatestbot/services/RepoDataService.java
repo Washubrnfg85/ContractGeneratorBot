@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class SessionServiceImpl implements SessionService {
+public class RepoDataService implements DataService {
 
     @Autowired
     private QuizQuestionRepository quizQuestionRepository;

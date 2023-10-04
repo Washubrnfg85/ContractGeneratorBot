@@ -1,7 +1,7 @@
 package com.archpj.getatestbot;
 
 import com.archpj.getatestbot.config.BotConfig;
-import com.archpj.getatestbot.services.SessionManager;
+import com.archpj.getatestbot.services.SessionProcessor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class TestBot extends TelegramLongPollingBot {
     private final BotConfig botConfig;
 
     @Autowired
-    private SessionManager sessionManager;
+    private SessionProcessor sessionProcessor;
 
     public TestBot(BotConfig botConfig) {
         this.botConfig = botConfig;
@@ -54,7 +54,7 @@ public class TestBot extends TelegramLongPollingBot {
                 user.getFirstName() + " " + user.getLastName() :
                 user.getFirstName();
 
-        SendMessage sendMessage = sessionManager.processUpdate(update, employeeId, employeeName);
+        SendMessage sendMessage = sessionProcessor.processUpdate(update, employeeId, employeeName);
 
         if (update.hasCallbackQuery()) {
             AnswerCallbackQuery close = AnswerCallbackQuery.builder()
@@ -64,7 +64,7 @@ public class TestBot extends TelegramLongPollingBot {
         }
         execute(sendMessage);
 
-        if (sessionManager.sessionIsOver(employeeId)) execute(sessionManager.sendResultToAdmin(employeeId));
-        sessionManager.removeSessionIfComplete(employeeId);
+        if (sessionProcessor.sessionIsOver(employeeId)) execute(sessionProcessor.sendResultToAdmin(employeeId));
+        sessionProcessor.removeSessionIfComplete(employeeId);
     }
 }

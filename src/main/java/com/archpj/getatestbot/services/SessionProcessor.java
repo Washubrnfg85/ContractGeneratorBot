@@ -18,14 +18,14 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class SessionManager {
+public class SessionProcessor {
 
-    private final SessionService sessionService;
+    private final DataService dataService;
     private Map<Long, Session> sessions;
 
     @Autowired
-    public SessionManager(SessionService sessionService) {
-        this.sessionService = sessionService;
+    public SessionProcessor(DataService dataService) {
+        this.dataService = dataService;
         this.sessions = new HashMap<>();
     }
 
@@ -53,7 +53,7 @@ public class SessionManager {
     }
 
     public void loadQuizQuestions(Session session) {
-        session.setQuizQuestions(sessionService.loadQuizQuestions(session.getTopic()));
+        session.setQuizQuestions(dataService.loadQuizQuestions(session.getTopic()));
         initializeCorrectAnswers(session);
     }
 
@@ -92,7 +92,7 @@ public class SessionManager {
                 correctAnswers + "\n" + employeeAnswers, timestamp);
 
         sessions.get(employeeId).setQuizResult(quizResult);
-        sessionService.saveQuizResult(quizResult);
+        dataService.saveQuizResult(quizResult);
         session.setOver(true);
 
         return SendMessage.builder().

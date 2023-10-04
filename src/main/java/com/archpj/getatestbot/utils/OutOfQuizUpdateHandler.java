@@ -52,7 +52,7 @@ public class OutOfQuizUpdateHandler {
         }
     }
 
-    private static SendMessage handleCallbackQuery(Update update) {
+    public static SendMessage handleCallbackQuery(Update update) {
         CallbackQuery callbackQuery = update.getCallbackQuery();
         long employeeId = callbackQuery.getFrom().getId();
 
