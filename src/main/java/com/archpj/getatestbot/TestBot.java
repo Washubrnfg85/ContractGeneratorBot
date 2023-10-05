@@ -1,7 +1,7 @@
 package com.archpj.getatestbot;
 
 import com.archpj.getatestbot.config.BotConfig;
-import com.archpj.getatestbot.services.SessionProcessor;
+import com.archpj.getatestbot.services.LogicProcessor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +22,12 @@ import static com.archpj.getatestbot.components.BotCommands.COMMANDS;
 public class TestBot extends TelegramLongPollingBot {
 
     private final BotConfig botConfig;
+    private final LogicProcessor logicProcessor;
 
     @Autowired
-    private SessionProcessor sessionProcessor;
-
-    public TestBot(BotConfig botConfig) {
+    public TestBot(BotConfig botConfig, LogicProcessor logicProcessor) {
         this.botConfig = botConfig;
+        this.logicProcessor = logicProcessor;
         try {
             this.execute(new SetMyCommands(COMMANDS, new BotCommandScopeDefault(), null));
         } catch (TelegramApiException e) {
@@ -54,7 +54,7 @@ public class TestBot extends TelegramLongPollingBot {
                 user.getFirstName() + " " + user.getLastName() :
                 user.getFirstName();
 
-        SendMessage sendMessage = sessionProcessor.processUpdate(update, employeeId, employeeName);
+        SendMessage sendMessage = logicProcessor.processUpdate(update, employeeId, employeeName);
 
         if (update.hasCallbackQuery()) {
             AnswerCallbackQuery close = AnswerCallbackQuery.builder()
@@ -64,7 +64,7 @@ public class TestBot extends TelegramLongPollingBot {
         }
         execute(sendMessage);
 
-        if (sessionProcessor.sessionIsOver(employeeId)) execute(sessionProcessor.sendResultToAdmin(employeeId));
-        sessionProcessor.removeSessionIfComplete(employeeId);
+        if (logicProcessor.sessionIsOver(employeeId)) execute(logicProcessor.sendResultToAdmin(employeeId));
+        logicProcessor.removeSessionIfComplete(employeeId);
     }
 }

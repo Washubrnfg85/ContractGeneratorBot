@@ -12,12 +12,15 @@ import java.util.*;
 @Service
 public class RepoDataService implements DataService {
 
-    @Autowired
-    private QuizQuestionRepository quizQuestionRepository;
+    private final QuizQuestionRepository quizQuestionRepository;
+    private final QuizResultsRepository quizResultsRepository;
+
 
     @Autowired
-    private QuizResultsRepository quizResultsRepository;
-
+    public RepoDataService(QuizQuestionRepository quizQuestionRepository, QuizResultsRepository quizResultsRepository) {
+        this.quizQuestionRepository = quizQuestionRepository;
+        this.quizResultsRepository = quizResultsRepository;
+    }
 
     public List<QuizQuestion> loadQuizQuestions(String topic) {
         return quizQuestionRepository.loadQuizQuestions(topic);

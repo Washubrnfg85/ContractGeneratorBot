@@ -12,8 +12,12 @@ import java.util.List;
 @Controller
 public class adminResultsController {
 
-    @Autowired
     private QuizResultsRepository quizResultsRepository;
+
+    @Autowired
+    public adminResultsController(QuizResultsRepository quizResultsRepository) {
+        this.quizResultsRepository = quizResultsRepository;
+    }
 
     @GetMapping("/")
     public String showAllQuizResults(Model model) {

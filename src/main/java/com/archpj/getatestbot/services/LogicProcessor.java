@@ -18,13 +18,13 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class SessionProcessor {
+public class LogicProcessor {
 
     private final DataService dataService;
     private Map<Long, Session> sessions;
 
     @Autowired
-    public SessionProcessor(DataService dataService) {
+    public LogicProcessor(DataService dataService) {
         this.dataService = dataService;
         this.sessions = new HashMap<>();
     }
@@ -52,12 +52,12 @@ public class SessionProcessor {
         return sendMessage;
     }
 
-    public void loadQuizQuestions(Session session) {
+    private void loadQuizQuestions(Session session) {
         session.setQuizQuestions(dataService.loadQuizQuestions(session.getTopic()));
         initializeCorrectAnswers(session);
     }
 
-    public void initializeCorrectAnswers(Session session) {
+    private void initializeCorrectAnswers(Session session) {
         StringBuilder result = new StringBuilder();
         for (QuizQuestion question : session.getQuizQuestions()) {
             result.append(question.getCorrectAnswer());
@@ -65,7 +65,7 @@ public class SessionProcessor {
         session.setCorrectAnswers(result.toString());
     }
 
-    public SendMessage sendNextQuestion(Session session) {
+    private SendMessage sendNextQuestion(Session session) {
         long employeeId = session.getEmployeeId();
         int iterationsThroughTest = session.getIterationsThroughTest();
         List<QuizQuestion> quizQuestions = session.getQuizQuestions();
@@ -80,7 +80,7 @@ public class SessionProcessor {
         return completeQuiz(session);
     }
 
-    public SendMessage completeQuiz(Session session) {
+    private SendMessage completeQuiz(Session session) {
         long employeeId = session.getEmployeeId();
         String employeeName = session.getEmployeeName();
         String topic = session.getTopic();
@@ -104,7 +104,7 @@ public class SessionProcessor {
     }
 
 
-    public void incrementIteration(Session session) {
+    private void incrementIteration(Session session) {
         int iteration  = session.getIterationsThroughTest();
         iteration++;
         session.setIterationsThroughTest(iteration);
@@ -132,7 +132,7 @@ public class SessionProcessor {
                 build();
     }
 
-    public boolean employeeHasSession(long employeeId) {
+    private boolean employeeHasSession(long employeeId) {
         return sessions.containsKey(employeeId);
     }
 

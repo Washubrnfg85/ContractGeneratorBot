@@ -16,9 +16,12 @@ import java.util.List;
 @Controller
 public class adminQuestionsController {
 
-    @Autowired
-    private QuizQuestionRepository quizQuestionRepository;
+    private final QuizQuestionRepository quizQuestionRepository;
 
+    @Autowired
+    public adminQuestionsController(QuizQuestionRepository quizQuestionRepository) {
+        this.quizQuestionRepository = quizQuestionRepository;
+    }
 
     @GetMapping("admin/questions/show_questions")
     public String showAllQuizQuestions(Model model) {
