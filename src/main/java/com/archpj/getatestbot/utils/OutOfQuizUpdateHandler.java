@@ -16,7 +16,7 @@ public class OutOfQuizUpdateHandler {
 
         return SendMessage.builder().
                 chatId(update.getMyChatMember().getChat().getId()).
-                text(BotCommands.ERROR_TEXT).
+                text(BotCommands.USER_ERROR_TEXT).
                 build();
     }
 
@@ -44,19 +44,18 @@ public class OutOfQuizUpdateHandler {
             default -> {
                 return SendMessage.builder().
                         chatId(employeeId).
-                        text(BotCommands.ERROR_TEXT).
+                        text(BotCommands.USER_ERROR_TEXT).
                         build();
             }
         }
     }
 
     public static SendMessage handleCallbackQuery(Update update) {
-        CallbackQuery callbackQuery = update.getCallbackQuery();
-        long employeeId = callbackQuery.getFrom().getId();
+        long employeeId = update.getCallbackQuery().getFrom().getId();
 
         return SendMessage.builder().
                 chatId(employeeId).
-                text("Если Вы читаете это сообщение, то что-то пошло не так. Обратитесь к разработчику").
+                text(BotCommands.ERROR_TEXT).
                 build();
     }
 }
