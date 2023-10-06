@@ -44,7 +44,7 @@ public class OnQuizUpdateHandler {
             case "Отказаться" -> {
                 return SendMessage.builder().
                         chatId(employeeId).
-                        text("reject").
+                        text("/reject").
                         build();
             }
             case "A", "B", "C", "D" -> {

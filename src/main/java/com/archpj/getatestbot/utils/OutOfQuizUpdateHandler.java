@@ -16,9 +16,7 @@ public class OutOfQuizUpdateHandler {
 
         return SendMessage.builder().
                 chatId(update.getMyChatMember().getChat().getId()).
-                text("""
-                        Обработка такого типа сообщений не предусмотрена функционалом.
-                        Воспользуйтесь меню.""").
+                text(BotCommands.ERROR_TEXT).
                 build();
     }
 
@@ -46,7 +44,7 @@ public class OutOfQuizUpdateHandler {
             default -> {
                 return SendMessage.builder().
                         chatId(employeeId).
-                        text(incomingText).
+                        text(BotCommands.ERROR_TEXT).
                         build();
             }
         }
