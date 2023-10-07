@@ -1,5 +1,6 @@
 package com.archpj.getatestbot.utils;
 
+import com.archpj.getatestbot.components.BotCommands;
 import com.archpj.getatestbot.components.Buttons;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
@@ -27,11 +28,7 @@ public class OnQuizUpdateHandler {
 
         return SendMessage.builder().
                 chatId(employeeId).
-                text("""
-                            Вы в процессе тестирования.
-                            Ответы принимаются только нажатием на одну из кнопок выбора ответа.
-                            Если Вы хотите прервать тест, то нажмите кнопку "Отказаться".
-                            Примите во внимание что в этом случае результаты не сохранятся и тест нужно будет пройти заново.""").
+                text(BotCommands.ON_QUIZ_ERROR_TEXT).
                 replyMarkup(Buttons.rejectTest()).
                 build();
     }
@@ -56,7 +53,7 @@ public class OnQuizUpdateHandler {
             default -> {
                 return SendMessage.builder().
                             chatId(employeeId).
-                            text("Если Вы читаете это сообщение, то что-то пошло не так. Обратитесь к разработчику").
+                            text(BotCommands.ERROR_TEXT).
                             build();
             }
         }

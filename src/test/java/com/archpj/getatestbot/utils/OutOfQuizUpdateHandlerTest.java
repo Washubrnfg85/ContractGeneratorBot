@@ -12,7 +12,7 @@ class OutOfQuizUpdateHandlerTest {
     private final User user = Mockito.spy(User.class);
     private final ChatMemberUpdated chatMemberUpdated = Mockito.spy(ChatMemberUpdated.class);
     private final Chat chat = Mockito.spy(Chat.class);
-    private final Message incommingMessage = Mockito.spy(Message.class);
+    private final Message message = Mockito.spy(Message.class);
     private final CallbackQuery callbackQuery = Mockito.spy(CallbackQuery.class);
 
 
@@ -23,27 +23,30 @@ class OutOfQuizUpdateHandlerTest {
         Mockito.when(update.getMyChatMember()).thenReturn(chatMemberUpdated);
         Mockito.when(update.getMyChatMember().getChat()).thenReturn(chat);
         Mockito.when(update.getMyChatMember().getChat().getId()).thenReturn(0L);
-
         Assertions.assertEquals(OutOfQuizUpdateHandler.handleUpdate(update).getText(), BotCommands.USER_ERROR_TEXT);
     }
 
     @Test
     void shouldReturnErrorTextIfWrongMessageReceived() {
-        Mockito.when(update.getMessage()).thenReturn(incommingMessage);
+        Mockito.when(update.hasMessage()).thenReturn(true);
+        Mockito.when(update.hasCallbackQuery()).thenReturn(false);
+        Mockito.when(update.getMessage()).thenReturn(message);
         Mockito.when(update.getMessage().getFrom()).thenReturn(user);
         Mockito.when(update.getMessage().getFrom().getId()).thenReturn(0L);
         Mockito.when(update.getMessage().getText()).thenReturn("");
 
-        Assertions.assertEquals(OutOfQuizUpdateHandler.handleMessage(update).getText(), BotCommands.USER_ERROR_TEXT);
+        Assertions.assertEquals(OutOfQuizUpdateHandler.handleUpdate(update).getText(), BotCommands.USER_ERROR_TEXT);
     }
 
     @Test
     void shouldReturnErrorTextIfCallbackReceived() {
+        Mockito.when(update.hasMessage()).thenReturn(false);
+        Mockito.when(update.hasCallbackQuery()).thenReturn(true);
         Mockito.when(update.getCallbackQuery()).thenReturn(callbackQuery);
         Mockito.when(update.getCallbackQuery().getFrom()).thenReturn(user);
         Mockito.when(update.getCallbackQuery().getFrom().getId()).thenReturn(0L);
         Mockito.when(update.hasCallbackQuery()).thenReturn(true);
 
-        Assertions.assertEquals(OutOfQuizUpdateHandler.handleCallbackQuery(update).getText(), BotCommands.ERROR_TEXT);
+        Assertions.assertEquals(OutOfQuizUpdateHandler.handleUpdate(update).getText(), BotCommands.ERROR_TEXT);
     }
 }
