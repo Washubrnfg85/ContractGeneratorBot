@@ -1,15 +1,27 @@
 package com.archpj.getatestbot.utils;
 
-import com.archpj.getatestbot.components.BotCommands;
 import com.archpj.getatestbot.components.Buttons;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-public class OnQuizUpdateHandler extends UpdateHandler {
+public class OnQuizUpdateHandler {
 
-    static SendMessage handleMessage(Update update) {
+    public static SendMessage handleUpdate(Update update) {
+        if (update.hasMessage()) return handleMessage(update);
+        if (update.hasCallbackQuery()) return handleCallbackQuery(update);
+
+        return SendMessage.builder().
+                chatId(update.getMyChatMember().getChat().getId()).
+                text("""
+                        Обработка такого типа сообщений не предусмотрена функционалом.
+                        Воспользуйтесь меню.""").
+                build();
+    }
+
+
+    private static SendMessage handleMessage(Update update) {
         Message incomingMessage = update.getMessage();
         long employeeId = incomingMessage.getFrom().getId();
 
@@ -24,7 +36,7 @@ public class OnQuizUpdateHandler extends UpdateHandler {
                 build();
     }
 
-    static SendMessage handleCallbackQuery(Update update) {
+    private static SendMessage handleCallbackQuery(Update update) {
         CallbackQuery callbackQuery = update.getCallbackQuery();
         long employeeId = callbackQuery.getFrom().getId();
 
@@ -44,7 +56,7 @@ public class OnQuizUpdateHandler extends UpdateHandler {
             default -> {
                 return SendMessage.builder().
                             chatId(employeeId).
-                            text(BotCommands.ERROR_TEXT).
+                            text("Если Вы читаете это сообщение, то что-то пошло не так. Обратитесь к разработчику").
                             build();
             }
         }
