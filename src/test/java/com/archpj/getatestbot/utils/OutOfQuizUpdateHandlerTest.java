@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.objects.*;
 
 class OutOfQuizUpdateHandlerTest {
 
-    private Update update = Mockito.spy(Update.class);
+    private final Update update = Mockito.spy(Update.class);
     private final User user = Mockito.spy(User.class);
     private final ChatMemberUpdated chatMemberUpdated = Mockito.spy(ChatMemberUpdated.class);
     private final Chat chat = Mockito.spy(Chat.class);

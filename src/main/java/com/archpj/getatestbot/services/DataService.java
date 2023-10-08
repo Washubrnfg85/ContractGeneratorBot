@@ -8,5 +8,8 @@ import java.util.List;
 public interface DataService {
 
     List<QuizQuestion> loadQuizQuestions(String topic);
+
     void saveQuizResult(QuizResult quizResult);
+
+    void addQuestion(QuizQuestion quizQuestion);
 }
