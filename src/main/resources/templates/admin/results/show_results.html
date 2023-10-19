@@ -10,7 +10,7 @@
 <div id="global">
     <div class="menu">
         <ul>
-            <li><a href="admin/questions/show_questions">Вопросы</a></li>
+            <li><a href="admin/questions/show_questions">Все вопросы</a></li>
             <li><a href="admin/questions/add_question">Добавить вопрос</a></li>
             <li><a href="#">Найти сотрудника</a></li>
             <li><a href="#">Кнопка 4</a></li>
@@ -22,18 +22,18 @@
 <table>
     <thead>
     <tr>
-        <th> Имя </th>
-        <th> Тема </th>
-        <th> Результат </th>
-        <th> Время </th>
+        <th>Имя</th>
+        <th>Тема</th>
+        <th>Результат</th>
+        <th>Время</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="quizResult : ${QuizResults}">
-        <td><span th:text="${quizResult.employeeName}"> Имя </span></td>
-        <td><span th:text="${quizResult.topic}"> Тема </span></td>
-        <td><span th:text="${quizResult.calculateScore}"> Результат </span></td>
-        <td><span th:text="${quizResult.trimTimestamp}"> Время </span></td>
+        <td><a th:href="@{/{id}(id = ${quizResult.getId()})}"><span th:text="${quizResult.employeeName}">Имя</span></a></td>
+        <td><span th:text="${quizResult.topic}">Тема</span></td>
+        <td><span th:text="${quizResult.calculateScore}">Результат</span></td>
+        <td><span th:text="${quizResult.trimTimestamp}">Время</span></td>
     </tr>
     </tbody>
 </table>

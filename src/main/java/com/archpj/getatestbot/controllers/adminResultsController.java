@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class adminResultsController {
@@ -25,6 +27,14 @@ public class adminResultsController {
         model.addAttribute("QuizResults", QuizResults);
 
         return "admin/results/show_results";
+    }
+
+    @GetMapping("/{id}")
+    public String showDetailedResult(@PathVariable("id") int id, Model model) {
+        QuizResult quizResult = quizResultsRepository.getReferenceById(id);
+        model.addAttribute("quizResult", quizResult);
+
+        return "admin/results/show_detailed_result";
     }
 
 }

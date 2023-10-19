@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Detailed result</title>
@@ -7,7 +7,43 @@
 </head>
 <body>
 
-Detailed result
+<div id="global">
+    <div class="menu">
+        <ul>
+            <li><a href="admin/questions/show_questions">Все вопросы</a></li>
+            <li><a href="admin/questions/add_question">Добавить вопрос</a></li>
+            <li><a href="/">Все результаты</a></li>
+            <li><a href="#">Другие пройденные тесты данного лица</a></li>
+        </ul>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+
+<p>Тестируемый: <span th:text = "${quizResult.getEmployeeName()}"></span></span></p>
+<p>Telegram ID <span th:text = "${quizResult.getEmployeeId()}"></span></p>
+<p>
+    Тест № <span th:text = "${quizResult.getId()}"></span>
+    по теме <span th:text = "${quizResult.getTopic()}"></span>
+    пройден <span th:text = "${quizResult.trimTimestamp()}"></span>
+    с результатом <span th:text = "${quizResult.calculateScore()}"></span> (правильные ответы / кол-во вопросов в тесте).
+</p>
+
+<table>
+    <thead>
+    <tr>
+        <th>Вопрос</th>
+        <th>Правильный ответ</th>
+        <th>Ответ тестируемого</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="question : ${questions}">
+        <td><span th:text="${question.getTopic()}">Вопрос</span></td>
+        <td><span th:text="${question.getCorrectAnswer()}">Правильный ответ</span></td>
+        <td><span th:text="${quizResult.calculateScore}">Ответ тестируемого</span></td>
+    </tr>
+    </tbody>
+</table>
 
 </body>
 </html>

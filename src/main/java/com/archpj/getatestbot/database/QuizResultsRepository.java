@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface QuizResultsRepository extends JpaRepository<QuizResult, Long> {
+public interface QuizResultsRepository extends JpaRepository<QuizResult, Integer> {
 
 }
