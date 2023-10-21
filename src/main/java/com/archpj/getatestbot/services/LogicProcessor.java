@@ -36,16 +36,16 @@ public class LogicProcessor {
             sendMessage = OnQuizUpdateHandler.handleUpdate(update);
         } else {
             sendMessage = OutOfQuizUpdateHandler.handleUpdate(update);
-        }
-
-        if (sendMessage.getText().matches("[A-D]") || CommonTopics.containsValue(sendMessage.getText())) {
-            if (!employeeHasSession(employeeId)) {
+            if (CommonTopics.containsValue(sendMessage.getText())) {
                 Session newSession = new Session(employeeId, employeeName, sendMessage.getText());
                 loadQuizQuestions(newSession);
+                newSession.saveQuestionsIds();
                 sessions.put(employeeId, newSession);
-            } else {
-                sessions.get(employeeId).appendAnswer(sendMessage.getText());
             }
+        }
+
+        if (sendMessage.getText().matches("[A-D]")) {
+            sessions.get(employeeId).appendAnswer(sendMessage.getText());
             sendMessage = sendNextQuestion(sessions.get(employeeId));
             incrementIteration(sessions.get(employeeId));
         }

@@ -1,9 +1,9 @@
 package com.archpj.getatestbot.utils;
 
 import com.archpj.getatestbot.components.BotCommands;
+import com.archpj.getatestbot.components.CommonTopics;
 import com.archpj.getatestbot.components.MenuOfTopics;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 

@@ -38,9 +38,9 @@
     </thead>
     <tbody>
     <tr th:each="question : ${questions}">
-        <td><span th:text="${question.getTopic()}">Вопрос</span></td>
+        <td><span th:text="${question.getQuestion()}">Вопрос</span></td>
         <td><span th:text="${question.getCorrectAnswer()}">Правильный ответ</span></td>
-        <td><span th:text="${quizResult.calculateScore}">Ответ тестируемого</span></td>
+        <td><span th:text="${quizResult.getResults().charAt(questions.indexOf(question)}">Ответ тестируемого</span></td>
     </tr>
     </tbody>
 </table>

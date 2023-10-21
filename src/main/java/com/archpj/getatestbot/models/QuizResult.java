@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 @Data
 @Entity
@@ -20,6 +21,8 @@ public class QuizResult {
     private String results;
     private Timestamp timestamp;
 
+    private List<Integer> questionIds;
+
     public QuizResult() {}
 
     public QuizResult(long employeeId, String employeeName, String topic, String results, Timestamp timestamp) {
@@ -28,6 +31,10 @@ public class QuizResult {
         this.topic = topic;
         this.results = results;
         this.timestamp = timestamp;
+    }
+
+    public void appendQuestionId(int id) {
+        questionIds.add(id);
     }
 
     public String calculateScore() {

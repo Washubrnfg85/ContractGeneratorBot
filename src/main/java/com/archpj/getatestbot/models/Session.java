@@ -30,6 +30,12 @@ public class Session {
         this.iterationsThroughTest = 0;
     }
 
+    public void saveQuestionsIds() {
+        for (QuizQuestion quizQuestion : quizQuestions) {
+            quizResult.appendQuestionId(quizQuestion.getQuestionId());
+        }
+    }
+
     public void appendAnswer(String letter) {
         this.employeeAnswers += letter;
     }

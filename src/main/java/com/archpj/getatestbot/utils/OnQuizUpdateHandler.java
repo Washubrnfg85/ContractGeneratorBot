@@ -15,9 +15,7 @@ public class OnQuizUpdateHandler {
 
         return SendMessage.builder().
                 chatId(update.getMyChatMember().getChat().getId()).
-                text("""
-                        Обработка такого типа сообщений не предусмотрена функционалом.
-                        Воспользуйтесь меню.""").
+                text(BotCommands.USER_ERROR_TEXT).
                 build();
     }
 
