@@ -21,8 +21,9 @@ public class adminResultsController {
     private QuizQuestionRepository quizQuestionRepository;
 
     @Autowired
-    public adminResultsController(QuizResultsRepository quizResultsRepository) {
+    public adminResultsController(QuizResultsRepository quizResultsRepository, QuizQuestionRepository quizQuestionRepository) {
         this.quizResultsRepository = quizResultsRepository;
+        this.quizQuestionRepository = quizQuestionRepository;
     }
 
     @GetMapping("/")

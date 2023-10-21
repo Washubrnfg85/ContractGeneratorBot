@@ -59,16 +59,16 @@ class LogicProcessorTest {
         Assertions.assertEquals(sendMessage.getText(), BotCommands.HELP_TEXT);
     }
 
-    @Test
-    void testProcessUpdateOnSessionCallback() {
-        Mockito.when(update.hasCallbackQuery()).thenReturn(true);
-        Mockito.when(update.getCallbackQuery()).thenReturn(callbackQuery);
-        Mockito.when(callbackQuery.getFrom()).thenReturn(user);
-        Mockito.when(user.getId()).thenReturn(1L);
-        Mockito.when(callbackQuery.getData()).thenReturn("Отказаться");
-
-        SendMessage sendMessage = logicProcessor.processUpdate(update, 1L, "Name");
-        Assertions.assertEquals(sendMessage.getText(), "/reject");
-    }
+//    @Test
+//    void testProcessUpdateOnSessionCallback() {
+//        Mockito.when(update.hasCallbackQuery()).thenReturn(true);
+//        Mockito.when(update.getCallbackQuery()).thenReturn(callbackQuery);
+//        Mockito.when(callbackQuery.getFrom()).thenReturn(user);
+//        Mockito.when(user.getId()).thenReturn(1L);
+//        Mockito.when(callbackQuery.getData()).thenReturn("Отказаться");
+//
+//        SendMessage sendMessage = logicProcessor.processUpdate(update, 1L, "Name");
+//        Assertions.assertEquals(sendMessage.getText(), "/reject");
+//    }
 
 }

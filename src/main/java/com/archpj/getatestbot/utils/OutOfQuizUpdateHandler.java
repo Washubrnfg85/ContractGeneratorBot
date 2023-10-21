@@ -1,7 +1,6 @@
 package com.archpj.getatestbot.utils;
 
 import com.archpj.getatestbot.components.BotCommands;
-import com.archpj.getatestbot.components.CommonTopics;
 import com.archpj.getatestbot.components.MenuOfTopics;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -44,7 +43,7 @@ public class OutOfQuizUpdateHandler {
             default -> {
                 return SendMessage.builder().
                         chatId(employeeId).
-                        text(BotCommands.USER_ERROR_TEXT).
+                        text(incomingText).
                         build();
             }
         }

@@ -90,6 +90,7 @@ public class LogicProcessor {
 
         QuizResult quizResult = new QuizResult(employeeId, employeeName, topic,
                 correctAnswers + "\n" + employeeAnswers, timestamp);
+        quizResult.saveQuestionsIds(session);
 
         sessions.get(employeeId).setQuizResult(quizResult);
         dataService.saveQuizResult(quizResult);

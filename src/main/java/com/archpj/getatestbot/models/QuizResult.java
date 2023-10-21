@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -21,7 +22,7 @@ public class QuizResult {
     private String results;
     private Timestamp timestamp;
 
-    private List<Integer> questionIds;
+    private List<Integer> questionIds = new ArrayList<>();
 
     public QuizResult() {}
 
@@ -35,6 +36,12 @@ public class QuizResult {
 
     public void appendQuestionId(int id) {
         questionIds.add(id);
+    }
+
+    public void saveQuestionsIds(Session session) {
+        for (QuizQuestion quizQuestion : session.getQuizQuestions()) {
+            appendQuestionId(quizQuestion.getQuestionId());
+        }
     }
 
     public String calculateScore() {
