@@ -39,9 +39,9 @@ public class adminResultsController {
         QuizResult quizResult = quizResultsRepository.getReferenceById(id);
 
         if (quizResult.getQuestionIds() != null) {
-            List<Optional<QuizQuestion>> questions = new ArrayList<>();
+            List<QuizQuestion> questions = new ArrayList<>();
             for (Integer questionId : quizResult.getQuestionIds()) {
-                questions.add(quizQuestionRepository.findById(questionId));
+                questions.add(quizQuestionRepository.getReferenceById(questionId));
             }
             model.addAttribute("questions", questions);
         }
