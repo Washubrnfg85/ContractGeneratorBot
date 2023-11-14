@@ -34,13 +34,9 @@ public class QuizResult {
         this.timestamp = timestamp;
     }
 
-    public void appendQuestionId(int id) {
-        questionIds.add(id);
-    }
-
     public void saveQuestionsIds(Session session) {
         for (QuizQuestion quizQuestion : session.getQuizQuestions()) {
-            appendQuestionId(quizQuestion.getQuestionId());
+            questionIds.add(quizQuestion.getQuestionId());
         }
     }
 

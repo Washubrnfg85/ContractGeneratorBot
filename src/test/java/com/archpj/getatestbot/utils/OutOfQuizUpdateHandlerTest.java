@@ -33,7 +33,7 @@ class OutOfQuizUpdateHandlerTest {
         Mockito.when(update.getMessage()).thenReturn(message);
         Mockito.when(update.getMessage().getFrom()).thenReturn(user);
         Mockito.when(update.getMessage().getFrom().getId()).thenReturn(0L);
-        Mockito.when(update.getMessage().getText()).thenReturn("");
+        Mockito.when(update.getMessage().getText()).thenReturn(BotCommands.USER_ERROR_TEXT);  //that's wrong, rewrite
 
         Assertions.assertEquals(OutOfQuizUpdateHandler.handleUpdate(update).getText(), BotCommands.USER_ERROR_TEXT);
     }

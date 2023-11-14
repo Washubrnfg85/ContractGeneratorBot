@@ -15,6 +15,7 @@
 	<description>Telegram bot with Spring Boot</description>
 	<properties>
 		<java.version>20</java.version>
+		<start-class>com.archpj.getatestbot.GetATestBotApplication</start-class>
 	</properties>
 	<dependencies>
 		<dependency>
